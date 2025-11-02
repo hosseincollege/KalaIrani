@@ -1,0 +1,16 @@
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+}
+
+a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #0066cc;
+}
