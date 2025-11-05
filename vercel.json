@@ -9,7 +9,10 @@
       }
     }
   ],
-  "routes": [
-    { "src": "/(.*)", "dest": "/dist/kala-irani.client/browser/index.html" }
+  "rewrites": [
+    { 
+      "source": "/(.*)", 
+      "destination": "/index.html" 
+    }
   ]
 }
