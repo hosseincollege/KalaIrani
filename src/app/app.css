@@ -1,0 +1,112 @@
+/* ===== Base ===== */
+body {
+  margin: 0;
+  font-family: "Vazirmatn", sans-serif;
+  direction: rtl;
+  background-color: #f7f8fa;
+  color: #333;
+}
+
+/* ===== Header ===== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, #e9e9e9 0%, #f3f3f3 50%, #e9e9e9 100%);
+  color: #333;
+  padding: 10px 15px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 60px;
+  z-index: 2000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Menu Button (همبرگر) ===== */
+.menu-btn {
+  position: absolute;
+  right: 20px;
+  top: 14px;
+  font-size: 26px;
+  color: #444;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ===== Logo ===== */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 52px;
+  display: block;
+}
+
+.logo-text {
+  font-weight: bold;
+  font-size: 22px;
+  color: #555;
+  margin-right: 10px;
+}
+
+/* ===== Side Menu ===== */
+.side-menu {
+  position: fixed;
+  top: 60px;
+  right: -130px;        /* مقدار منفی را نصف عرض بگذار */
+  width: 110px;         /* عرض منو نصف مقدار قبلی ۲۲۰ شد */
+  height: calc(100vh - 60px);
+  background: linear-gradient(180deg, #f9f9f9 0%, #e9e9e9 100%);
+  padding: 15px;        /* padding را هم کمی کمتر کن تا محتوا فشرده‌تر باشد */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: right 0.35s ease;
+  z-index: 1500;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.06);
+}
+
+
+
+.side-menu.open {
+  right: 0;
+}
+
+.side-menu a {
+  color: #333;
+  text-decoration: none;
+  padding: 12px 0;
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #dcdcdc;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.side-menu a:hover {
+  background: #ededed;
+  color: #000;
+}
+
+.side-menu a.active {
+  background: #d9d9d9;
+  color: #000;
+}
+
+/* ===== Page Body ===== */
+.page-body {
+  padding-top: 80px;
+  padding-right: 25px;
+  padding-left: 25px;
+}

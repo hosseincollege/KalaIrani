@@ -1,18 +1,18 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { HomeComponent } from './pages/home/home.component';
-import { ShopsComponent } from './pages/shops/shops.component';
-import { ShopDetailsComponent } from './pages/shops/shop-details/shop-details.component';
-import { ProductDetailsComponent } from './pages/products/product-details/product-details.component';
+import { HomePage } from './pages/home/home';
+import { ShopsPage } from './pages/shops/shops';
+import { LoginPage } from './pages/login/login';
+import { RegisterPage } from './pages/register/register';
+import { AccountPage } from './pages/account/account';
+import { CreateShopPage } from './pages/create-shop/create-shop'; // ✅ مسیر جدید
+import { ProductsPage } from './pages/products/products';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'shops', component: ShopsComponent },
-  { path: 'shops/:id', component: ShopDetailsComponent },
-  { path: 'products/:id', component: ProductDetailsComponent },
-  { path: '**', redirectTo: 'login' }
+  { path: '', component: HomePage },
+  { path: 'shops', component: ShopsPage },
+  { path: 'login', component: LoginPage },
+  { path: 'register', component: RegisterPage },
+  { path: 'account', component: AccountPage },
+  { path: 'create-shop', component: CreateShopPage }, // ✅ اضافه شد
+  { path: 'shops/:id/products', component: ProductsPage },
 ];

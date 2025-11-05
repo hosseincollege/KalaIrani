@@ -1,0 +1,13 @@
+<div class="create-shop-page">
+  <h2 class="page-title">✳️ ایجاد فروشگاه جدید</h2>
+
+  <form class="create-form" (ngSubmit)="createShop()">
+    <label>نام فروشگاه</label>
+    <input [(ngModel)]="shopName" name="shopName" required>
+
+    <label>توضیحات</label>
+    <textarea [(ngModel)]="description" name="description"></textarea>
+
+    <button type="submit" class="submit-btn">✅ ثبت فروشگاه</button>
+  </form>
+</div>

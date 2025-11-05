@@ -1,18 +1,32 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'https://localhost:7257/api/auth';
+  private userKey = 'loggedUser';
+  private loggedIn = new BehaviorSubject<boolean>(this.isLoggedInInit());
+  isLoggedIn$ = this.loggedIn.asObservable();
 
-  constructor(private http: HttpClient) {}
-
-  register(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, data);
+  private isLoggedInInit(): boolean {
+    return localStorage.getItem(this.userKey) !== null;
   }
 
-  login(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login`, data);
+  isLoggedIn(): boolean {
+    return this.isLoggedInInit();
+  }
+
+  getUser() {
+    const user = localStorage.getItem(this.userKey);
+    return user ? JSON.parse(user) : null;
+  }
+
+  login(user: any) {
+    localStorage.setItem(this.userKey, JSON.stringify(user));
+    this.loggedIn.next(true); // 🔹 وضعیت به‌روزرسانی شود
+  }
+
+  logout() {
+    localStorage.removeItem(this.userKey);
+    this.loggedIn.next(false); // 🔹 وضعیت ریست شود
   }
 }

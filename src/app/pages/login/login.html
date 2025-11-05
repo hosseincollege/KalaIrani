@@ -1,1 +1,18 @@
-<p>login works!</p>
+<h2>ورود به حساب کاربری</h2>
+
+<div>
+  <label>نام کاربری:</label>
+  <input [(ngModel)]="username" type="text" />
+</div>
+
+<div>
+  <label>رمز عبور:</label>
+  <input [(ngModel)]="password" type="password" />
+</div>
+
+<button (click)="login()">ورود</button>
+
+<p [style.color]="isError ? 'red' : 'green'">{{ message }}</p>
+
+<hr />
+<p>اکانت نداری؟ <a routerLink="/register">ثبت‌نام</a></p>

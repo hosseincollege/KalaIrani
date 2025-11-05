@@ -1,1 +1,22 @@
-<p>shops works!</p>
+<div class="shops-page">
+  <h2 class="page-title">🛍️ لیست فروشگاه‌ها</h2>
+
+  <div class="actions">
+    <a routerLink="/create-shop" class="create-shop-btn">
+      ➕ ایجاد فروشگاه جدید
+    </a>
+  </div>
+
+  <div class="shops-grid">
+    <div *ngFor="let shop of shops" class="shop-card">
+      <h3 class="shop-name">{{ shop.name }}</h3>
+      <p class="shop-desc">{{ shop.description }}</p>
+
+      <div class="shop-controls">
+        <a [routerLink]="['/shops', shop.id, 'products']" class="products-btn">
+          🧾 مدیریت محصولات
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

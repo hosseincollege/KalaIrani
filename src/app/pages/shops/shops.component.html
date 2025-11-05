@@ -1,7 +1,0 @@
-<h2>لیست فروشگاه‌ها</h2>
-<ul>
-  <li *ngFor="let shop of shops">
-    <a [routerLink]="['/shops', shop.id]">{{ shop.name }}</a>
-    <p>{{ shop.description }}</p>
-  </li>
-</ul>

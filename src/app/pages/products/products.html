@@ -1,0 +1,19 @@
+<div class="products-page">
+  <h2 class="page-title">کالاهای فروشگاه</h2>
+
+  <form class="add-product-form" (ngSubmit)="addProduct()">
+    <input [(ngModel)]="productName" name="productName" placeholder="نام کالا" required>
+    <input [(ngModel)]="productPrice" name="productPrice" placeholder="قیمت" required>
+    <button type="submit" class="add-btn">➕ افزودن کالا</button>
+  </form>
+
+  <div class="product-list">
+    <div *ngFor="let p of products" class="product-card">
+      <div class="prod-info">
+        <strong>{{ p.name }}</strong>
+        <span>{{ p.price }} تومان</span>
+      </div>
+      <button (click)="deleteProduct(p)" class="delete-btn">❌ حذف</button>
+    </div>
+  </div>
+</div>
