@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "angular.json",
+      "src": "package.json", 
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "outputDirectory": "dist/kala-irani.client/browser"
       }
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/(.*)", "dest": "/dist/kala-irani.client/browser/index.html" }
   ]
 }
