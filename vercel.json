@@ -1,18 +1,8 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json", 
-      "use": "@vercel/static-build",
-      "config": {
-        "outputDirectory": "dist/kala-irani.client/browser"
-      }
-    }
-  ],
   "rewrites": [
-    { 
-      "source": "/(.*)", 
-      "destination": "/dist/kala-irani.client/browser/index.html" 
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
