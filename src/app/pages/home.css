@@ -1,0 +1,220 @@
+/* ====================================
+   KalaIrani Home Page - ERP Grade Design
+   ==================================== */
+
+.home-page {
+  direction: rtl;
+  font-family: "Vazirmatn", sans-serif;
+  background: #fdfdfd;
+  overflow-x: hidden;
+  color: #333;
+}
+
+/* =======================
+   Hero Section
+   ======================= */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 60px;
+  background: linear-gradient(90deg, #f7fdfa 0%, #e5fff9 100%);
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.hero-content {
+  width: 50%;
+  animation: fadeInRight 1.2s ease-out;
+}
+
+.hero-content h1 {
+  font-size: 34px;
+  color: #004c4c;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 17px;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 25px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.hero-image img {
+  width: 380px;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0, 128, 128, 0.25);
+  animation: fadeInLeft 1.2s ease-out;
+}
+
+/* =======================
+   Buttons
+   ======================= */
+.btn-primary,
+.btn-secondary {
+  border: none;
+  padding: 12px 26px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-primary {
+  background-color: #009999;
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #00b3b3;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+.btn-secondary {
+  background-color: #006666;
+  color: #fff;
+}
+.btn-secondary:hover {
+  background-color: #008888;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+/* =======================
+   Features Section
+   ======================= */
+.features {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  padding: 70px 40px;
+  background: #fff;
+  border-bottom: 1px solid #ebebeb;
+  text-align: center;
+}
+
+.feature {
+  width: 30%;
+  animation: fadeInUp 0.8s ease forwards;
+  transition: all 0.3s ease;
+}
+.feature:hover {
+  transform: translateY(-8px);
+}
+.feature i {
+  font-size: 40px;
+  color: #009999;
+  margin-bottom: 15px;
+}
+.feature h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #004c4c;
+}
+.feature p {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.7;
+}
+
+/* =======================
+   Categories Grid
+   ======================= */
+.categories {
+  background: #f9ffff;
+  padding: 70px 60px;
+  text-align: center;
+}
+
+.categories h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #006666;
+  margin-bottom: 40px;
+}
+
+.categories-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.cat-card {
+  width: 220px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,128,128,0.12);
+  padding: 14px;
+  transition: all 0.3s ease;
+}
+
+.cat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,128,128,0.25);
+}
+
+.cat-card img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.cat-card h4 {
+  font-size: 15px;
+  font-weight: 500;
+  color: #006666;
+}
+
+/* =======================
+   CTA Section
+   ======================= */
+.cta {
+  text-align: center;
+  background: linear-gradient(180deg, #f8ffff 0%, #e6fafa 100%);
+  padding: 70px 40px;
+  border-top: 1px solid #dcdcdc;
+}
+.cta h2 {
+  font-size: 26px;
+  color: #004c4c;
+  margin-bottom: 12px;
+}
+.cta p {
+  color: #555;
+  margin-bottom: 25px;
+  font-size: 16px;
+}
+.footer {
+  text-align: center;
+  padding: 25px;
+  background: #efefef;
+  font-size: 14px;
+  color: #777;
+  border-top: 1px solid #ccc;
+}
+
+/* =======================
+   Animations
+   ======================= */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(35px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-35px); }
+  to { opacity: 1; transform: translateX(0); }
+}

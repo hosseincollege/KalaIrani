@@ -92,6 +92,7 @@ body {
   display: block;
   border-bottom: 1px solid #dcdcdc;
   transition: background 0.2s ease, color 0.2s ease;
+  cursor: pointer; /* 👈 اضافه کن تا علامت دست بشه */
 }
 
 .side-menu a:hover {
@@ -109,4 +110,10 @@ body {
   padding-top: 80px;
   padding-right: 25px;
   padding-left: 25px;
+}
+
+.menu-btn,
+.side-menu a,
+.side-menu button {
+  cursor: pointer;
 }

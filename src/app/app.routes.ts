@@ -1,18 +1,60 @@
+// File: src/app/app.routes.ts
 import { Routes } from '@angular/router';
-import { HomePage } from './pages/home/home';
-import { ShopsPage } from './pages/shops/shops';
-import { LoginPage } from './pages/login/login';
-import { RegisterPage } from './pages/register/register';
-import { AccountPage } from './pages/account/account';
-import { CreateShopPage } from './pages/create-shop/create-shop'; // ✅ مسیر جدید
-import { ProductsPage } from './pages/products/products';
 
 export const routes: Routes = [
-  { path: '', component: HomePage },
-  { path: 'shops', component: ShopsPage },
-  { path: 'login', component: LoginPage },
-  { path: 'register', component: RegisterPage },
-  { path: 'account', component: AccountPage },
-  { path: 'create-shop', component: CreateShopPage }, // ✅ اضافه شد
-  { path: 'shops/:id/products', component: ProductsPage },
+  // 🏠 صفحه اصلی واقعی (HomePage)
+  {
+    path: '',
+    loadComponent: () =>
+      import('./pages/home').then(m => m.HomePage),
+    pathMatch: 'full'
+  },
+
+  // 📋 لیست فروشگاه‌ها
+  {
+    path: 'shops',
+    loadComponent: () =>
+      import('./pages/shops').then(m => m.ShopsPage)
+  },
+
+  // 🛍️ ایجاد فروشگاه جدید
+  {
+    path: 'create-shop',
+    loadComponent: () =>
+      import('./pages/create-shop').then(m => m.CreateShopPage)
+  },
+
+  // 🔍 جزئیات فروشگاه
+  {
+    path: 'shop/:id',
+    loadComponent: () =>
+      import('./pages/shop-detail').then(m => m.ShopDetailPage)
+  },
+
+  // ✏️ ویرایش فروشگاه
+  {
+    path: 'edit-shop/:id',
+    loadComponent: () =>
+      import('./pages/create-shop').then(m => m.CreateShopPage)
+  },
+
+  // 👤 حساب کاربری
+  {
+    path: 'account',
+    loadComponent: () =>
+      import('./pages/account').then(m => m.AccountPage)
+  },
+
+  // 🔑 ورود کاربر
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/login').then(m => m.LoginPage)
+  },
+
+  // 🧭 اگر مسیر اشتباه وارد شد برگرد به خانه
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];

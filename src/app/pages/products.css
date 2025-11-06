@@ -1,0 +1,149 @@
+.products-page {
+  width: 90%;
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 25px;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  text-align: right;
+  direction: rtl;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+.products-page h2 {
+  color: #006666;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.products-page h2 span {
+  color: #000;
+  font-weight: 500;
+}
+
+.add-product-section {
+  background: #f9ffff;
+  border: 1px solid #00aaaa44;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #006666;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+  transition: border-color 0.25s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #00aaaa;
+  outline: none;
+}
+
+.btn-add {
+  background: #00b3b3;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-add:hover {
+  background: #009999;
+  transform: translateY(-2px);
+}
+
+.msg {
+  color: #006666;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.list-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #006666;
+}
+
+.product-card {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 14px;
+  margin-top: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+
+.product-card h4 {
+  margin: 0 0 6px 0;
+  font-weight: 600;
+  color: #000;
+}
+
+.price {
+  color: #007777;
+  font-weight: 500;
+}
+
+.desc {
+  color: #666;
+  font-size: 13px;
+  margin: 8px 0;
+}
+
+.btn-delete {
+  background: #d81b60;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.3s ease;
+}
+
+.btn-delete:hover {
+  background: #c2185b;
+}
+
+.btn-clear-all {
+  background: #f9a825;
+  color: #000;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.btn-clear-all:hover {
+  background: #fdd835;
+  transform: translateY(-2px);
+}
+
+.empty {
+  color: #666;
+  text-align: center;
+  margin-top: 10px;
+}

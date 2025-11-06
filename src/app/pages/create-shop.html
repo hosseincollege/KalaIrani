@@ -1,0 +1,92 @@
+<div class="create-shop-form">
+  <button class="btn-back" (click)="goBackToList()">🔙 بازگشت به لیست فروشگاه‌ها</button>
+
+  <h2>🏭 ایجاد فروشگاه یا نمایندگی تخصصی</h2>
+  <p class="intro">
+    لطفاً اطلاعات مربوط به فروشگاه، زمینه صنعتی و کارخانه/کارگاه مادر را وارد نمایید.
+  </p>
+
+  <label>نام فروشگاه:</label>
+  <input type="text" [(ngModel)]="shop.name" placeholder="مثلاً ایران‌تک قطعات الکترونیک"/>
+
+  <label>نوع فعالیت:</label>
+  <select [(ngModel)]="shop.category">
+    <option value="">انتخاب نوع فعالیت</option>
+    <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+  </select>
+
+  <label>زمینه صنعتی تخصصی:</label>
+  <input type="text" [(ngModel)]="shop.industrialField" placeholder="مثلاً سنسور دما، پمپ هیدرولیک، تراشه حافظه"/>
+
+  <label>نام کارخانه یا شرکت تولیدکننده اصلی:</label>
+  <input type="text" [(ngModel)]="shop.manufacturerName" placeholder="مثلاً شرکت صنایع پارسیان الکترونیک"/>
+
+  <label>نوع نهاد تولیدکننده:</label>
+  <select [(ngModel)]="shop.manufacturerType">
+    <option *ngFor="let t of manufacturerTypes" [value]="t">{{ t }}</option>
+  </select>
+
+  <label>نوع نمایندگی یا شعبه:</label>
+  <select [(ngModel)]="shop.branchType">
+    <option *ngFor="let b of branchTypes" [value]="b">{{ b }}</option>
+  </select>
+
+  <label>شماره مجوز فعالیت:</label>
+  <input type="text" [(ngModel)]="shop.licenseNumber"/>
+
+  <label>شماره قرارداد همکاری با کارخانه:</label>
+  <input type="text" [(ngModel)]="shop.contractNumber"/>
+
+  <label>استان:</label>
+  <select [(ngModel)]="shop.province">
+    <option *ngFor="let p of provinces" [value]="p">{{ p }}</option>
+  </select>
+
+  <label>شهر:</label>
+  <input type="text" [(ngModel)]="shop.city" placeholder="نام شهر"/>
+
+  <label>نشانی دقیق:</label>
+  <textarea [(ngModel)]="shop.address" placeholder="خیابان - پلاک - واحد"></textarea>
+
+  <label>توضیحات فروشگاه / زمینه کاری:</label>
+  <textarea [(ngModel)]="shop.description" placeholder="شرح مختصر فعالیت فنی و نوع محصولات"></textarea>
+
+  <label>شماره تماس:</label>
+  <input type="text" [(ngModel)]="shop.phone"/>
+
+  <label>ایمیل:</label>
+  <input type="email" [(ngModel)]="shop.email"/>
+
+  <label>وب‌سایت:</label>
+  <input type="text" [(ngModel)]="shop.website"/>
+
+  <label>سال تأسیس:</label>
+  <input type="number" [(ngModel)]="shop.establishedYear" min="1300" max="1500"/>
+
+  <hr />
+
+  <label>📷 تصویر کاور فروشگاه:</label>
+  <input type="file" (change)="onCoverSelected($event)" accept="image/*"/>
+  <div class="preview" *ngIf="coverPreview">
+    <img [src]="coverPreview" alt="کاور فروشگاه"/>
+  </div>
+
+  <label>🖼️ گالری تصاویر تجهیزات یا محصولات:</label>
+  <input type="file" multiple (change)="onGallerySelected($event)" accept="image/*"/>
+  <div class="gallery-preview" *ngIf="galleryPreviews.length > 0">
+    <img *ngFor="let g of galleryPreviews" [src]="g" alt="تصویر گالری"/>
+  </div>
+
+  <div class="json-tools">
+    <button class="json-btn" (click)="downloadForm()">⬇️ دانلود فرم خام JSON</button>
+    <label class="upload-json">
+      📤 بارگذاری JSON
+      <input type="file" (change)="uploadJson($event)" accept="application/json"/>
+    </label>
+  </div>
+
+  <button type="submit" class="btn-submit" (click)="onSubmit()">✅ ثبت فروشگاه تخصصی</button>
+
+  <div *ngIf="loading" class="loading">در حال ارسال اطلاعات...</div>
+  <div class="message">{{ message }}</div>
+</div>

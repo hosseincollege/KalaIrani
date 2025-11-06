@@ -1,32 +1,38 @@
+// File: src/app/auth.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
-  private userKey = 'loggedUser';
-  private loggedIn = new BehaviorSubject<boolean>(this.isLoggedInInit());
-  isLoggedIn$ = this.loggedIn.asObservable();
+  private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
+  isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-  private isLoggedInInit(): boolean {
-    return localStorage.getItem(this.userKey) !== null;
+  constructor() {}
+
+  private hasToken(): boolean {
+    return !!localStorage.getItem('token');
   }
 
   isLoggedIn(): boolean {
-    return this.isLoggedInInit();
+    return this.hasToken();
   }
 
-  getUser() {
-    const user = localStorage.getItem(this.userKey);
-    return user ? JSON.parse(user) : null;
+  // ✅ متد مورد نیاز برای ShopDetail و Account Page
+  getUsername(): string {
+    return localStorage.getItem('username') || '';
   }
 
-  login(user: any) {
-    localStorage.setItem(this.userKey, JSON.stringify(user));
-    this.loggedIn.next(true); // 🔹 وضعیت به‌روزرسانی شود
+  login(username: string, token: string) {
+    localStorage.setItem('username', username);
+    localStorage.setItem('token', token);
+    this.isLoggedInSubject.next(true);
   }
 
   logout() {
-    localStorage.removeItem(this.userKey);
-    this.loggedIn.next(false); // 🔹 وضعیت ریست شود
+    localStorage.removeItem('username');
+    localStorage.removeItem('token');
+    this.isLoggedInSubject.next(false);
   }
 }

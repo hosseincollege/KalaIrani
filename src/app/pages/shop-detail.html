@@ -1,0 +1,48 @@
+<div class="shop-detail-page" [hidden]="loading">
+  <button class="btn-back" (click)="goBack()">🔙 بازگشت به لیست فروشگاه‌ها</button>
+
+  <div class="cover-section">
+    <img [src]="coverSrc" alt="کاور فروشگاه"/>
+  </div>
+
+  <h2>{{ shop?.name }}</h2>
+  <p class="desc">{{ shop?.description }}</p>
+
+  <div class="info-box">
+    <h3>🧱 مشخصات فروشگاه</h3>
+    <p>دسته‌بندی: <strong>{{ shop?.category }}</strong></p>
+    <p>زمینه صنعتی: <strong>{{ shop?.industrialField }}</strong></p>
+    <p>استان: <strong>{{ shop?.province }}</strong></p>
+    <p>شهر: <strong>{{ shop?.city }}</strong></p>
+    <p>نشانی: {{ shop?.address }}</p>
+    <p>سال تأسیس: {{ shop?.establishedYear }}</p>
+    <p>تلفن تماس: <strong>{{ shop?.phone }}</strong></p>
+    <p>ایمیل: <strong>{{ shop?.email }}</strong></p>
+    <p>وب‌سایت: <a [href]="shop?.website" target="_blank">{{ shop?.website }}</a></p>
+  </div>
+
+  <div class="manufacturer-box">
+    <h3>🏭 اطلاعات کارخانه یا شرکت تولیدی</h3>
+    <p>نام: <strong>{{ shop?.manufacturerName }}</strong></p>
+    <p>نوع نهاد: <strong>{{ shop?.manufacturerType }}</strong></p>
+    <p>نوع نمایندگی: <strong>{{ shop?.branchType }}</strong></p>
+    <p>شماره مجوز: {{ shop?.licenseNumber }}</p>
+    <p>شماره قرارداد همکاری: {{ shop?.contractNumber }}</p>
+  </div>
+
+  <div class="gallery-box" *ngIf="galleryItems.length > 0">
+    <h3>🖼️ گالری تصاویر</h3>
+    <div class="gallery">
+      <img *ngFor="let g of galleryItems" [src]="g" alt="گالری"/>
+    </div>
+  </div>
+
+  <div class="action-box" [hidden]="!isOwner">
+    <h3>⚙️ عملیات مدیریتی</h3>
+    <button class="btn" (click)="goToProducts(shop.id)">📦 مدیریت محصولات</button>
+    <button class="btn-edit" (click)="editShop(shop.id)">✏️ ویرایش فروشگاه</button>
+    <button class="btn-delete" (click)="deleteShop(shop.id)">🗑️ حذف فروشگاه</button>
+  </div>
+</div>
+
+<div class="loading" *ngIf="loading">در حال بارگذاری...</div>

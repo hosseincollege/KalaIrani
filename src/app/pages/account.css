@@ -1,0 +1,127 @@
+.account-page, .guest-page {
+  width: 90%;
+  max-width: 850px;
+  margin: 90px auto;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  font-family: "Vazirmatn", sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+
+.account-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #006666;
+}
+
+.welcome-text {
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.btn {
+  background: #00a6a6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+
+.btn:hover {
+  background: #00b3b3;
+  transform: translateY(-2px);
+}
+
+.logout {
+  background: #cc0000;
+}
+
+.shops-title {
+  font-size: 19px;
+  font-weight: 600;
+  color: #004c4c;
+  margin-top: 25px;
+}
+
+.loading, .empty {
+  margin-top: 15px;
+  color: #777;
+}
+
+.shops-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 15px;
+}
+
+.shop-card {
+  background: linear-gradient(to bottom right, #f9fefe, #e4fafa);
+  border-radius: 12px;
+  width: 240px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease-in-out;
+}
+
+.shop-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,128,128,0.2);
+}
+
+.shop-cover {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  background-color: #eaeaea;
+  transition: opacity 0.3s ease;
+}
+
+.shop-card h4 {
+  font-size: 17px;
+  font-weight: 600;
+  color: #006666;
+}
+
+.shop-card p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.manage-btn {
+  background: #007777;
+}
+
+.manage-btn:hover {
+  background: #00aaaa;
+}
+
+.view-btn {
+  background: #006b6b;
+}
+.view-btn:hover {
+  background: #008888;
+}

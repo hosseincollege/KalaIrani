@@ -1,0 +1,49 @@
+<div class="shops-page">
+  <div class="header-bar">
+    <h2>📋 لیست فروشگاه‌ها</h2>
+    <div class="buttons">
+      <button class="btn-create" (click)="goToCreateShop()">➕ ایجاد فروشگاه جدید</button>
+      <button class="btn-back" (click)="goBackToList()">🔙 بازگشت به صفحه اصلی</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <label>نوع فروشگاه:</label>
+    <select [(ngModel)]="categoryFilter" (change)="applyFilters()">
+      <option value="">همه</option>
+      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+    </select>
+
+    <label>استان:</label>
+    <select [(ngModel)]="provinceFilter" (change)="applyFilters()">
+      <option value="">همه</option>
+      <option *ngFor="let p of provinces" [value]="p">{{ p }}</option>
+    </select>
+  </div>
+
+  <div *ngIf="loading" class="loading">در حال بارگذاری...</div>
+  <div *ngIf="!loading && filteredShops.length === 0" class="empty">
+    ❗ هیچ فروشگاهی با فیلتر فعلی یافت نشد.
+  </div>
+
+  <div *ngIf="!loading && filteredShops.length > 0" class="shops-grid">
+    <div class="shop-card" *ngFor="let shop of filteredShops" (click)="goToDetail(shop.id)">
+      <img
+        [src]="shop.safeCover"
+        (error)="handleImageError(shop)"
+        alt="کاور فروشگاه"
+        class="shop-cover"
+      />
+
+      <h3>{{ shop.name }}</h3>
+      <p class="desc">{{ shop.description }}</p>
+      <p class="meta">🏙️ {{ shop.city }} | 📂 {{ shop.category }}</p>
+      <p class="owner">👤 {{ shop.owner }}</p>
+
+      <div class="actions" *ngIf="canManage(shop.owner)">
+        <button class="edit-btn" (click)="editShop(shop.id, $event)">✏️ ویرایش</button>
+        <button class="delete-btn" (click)="deleteShop(shop.id, $event)">🗑️ حذف</button>
+      </div>
+    </div>
+  </div>
+</div>

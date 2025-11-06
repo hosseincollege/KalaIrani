@@ -1,0 +1,82 @@
+<div class="edit-shop-form" [hidden]="loading">
+  <button class="btn-back" (click)="goBack()">🔙 بازگشت به لیست فروشگاه‌ها</button>
+
+  <h2>✏️ ویرایش فروشگاه تخصصی</h2>
+  <p class="intro">اطلاعات فروشگاه را اصلاح کرده و در پایان روی دکمه "ثبت تغییرات" کلیک کنید.</p>
+
+  <label>نام فروشگاه:</label>
+  <input type="text" [(ngModel)]="shop.name" placeholder="مثلاً ایران‌تک قطعات الکترونیک"/>
+
+  <label>نوع فعالیت:</label>
+  <select [(ngModel)]="shop.category">
+    <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+  </select>
+
+  <label>زمینه صنعتی:</label>
+  <input type="text" [(ngModel)]="shop.industrialField"/>
+
+  <label>نام کارخانه یا شرکت تولیدکننده:</label>
+  <input type="text" [(ngModel)]="shop.manufacturerName"/>
+
+  <label>نوع نهاد تولیدی:</label>
+  <select [(ngModel)]="shop.manufacturerType">
+    <option *ngFor="let t of manufacturerTypes" [value]="t">{{ t }}</option>
+  </select>
+
+  <label>نوع نمایندگی:</label>
+  <select [(ngModel)]="shop.branchType">
+    <option *ngFor="let b of branchTypes" [value]="b">{{ b }}</option>
+  </select>
+
+  <label>شماره مجوز:</label>
+  <input type="text" [(ngModel)]="shop.licenseNumber"/>
+
+  <label>شماره قرارداد همکاری:</label>
+  <input type="text" [(ngModel)]="shop.contractNumber"/>
+
+  <label>استان:</label>
+  <select [(ngModel)]="shop.province">
+    <option *ngFor="let p of provinces" [value]="p">{{ p }}</option>
+  </select>
+
+  <label>شهر:</label>
+  <input type="text" [(ngModel)]="shop.city"/>
+
+  <label>نشانی:</label>
+  <textarea [(ngModel)]="shop.address"></textarea>
+
+  <label>توضیحات:</label>
+  <textarea [(ngModel)]="shop.description"></textarea>
+
+  <label>شماره تماس:</label>
+  <input type="text" [(ngModel)]="shop.phone"/>
+
+  <label>ایمیل:</label>
+  <input type="email" [(ngModel)]="shop.email"/>
+
+  <label>وب‌سایت:</label>
+  <input type="text" [(ngModel)]="shop.website"/>
+
+  <label>سال تأسیس:</label>
+  <input type="number" [(ngModel)]="shop.establishedYear"/>
+
+  <hr />
+
+  <label>📷 تصویر کاور فروشگاه:</label>
+  <input type="file" (change)="onCoverSelected($event)" accept="image/*"/>
+  <div class="preview" *ngIf="coverPreview">
+    <img [src]="coverPreview"/>
+  </div>
+
+  <label>🖼️ گالری تصاویر:</label>
+  <input type="file" multiple (change)="onGallerySelected($event)" accept="image/*"/>
+  <div class="gallery-preview" *ngIf="galleryPreviews.length > 0">
+    <img *ngFor="let g of galleryPreviews" [src]="g"/>
+  </div>
+
+  <button class="btn-save" (click)="saveChanges()">✅ ثبت تغییرات</button>
+  <div *ngIf="loading" class="loading">در حال ارسال...</div>
+  <div class="message">{{ message }}</div>
+</div>
+
+<div class="loading" *ngIf="loading">در حال بارگذاری اطلاعات...</div>
