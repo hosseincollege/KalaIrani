@@ -1,51 +1,40 @@
 .shop-detail-page {
-  width: 90%;
-  max-width: 850px;
-  margin: 60px auto;
+  width: 92%;
+  max-width: 950px;
+  margin: 30px auto;
   background: #ffffff;
   border-radius: 14px;
-  box-shadow: 0 5px 15px rgba(0, 80, 80, 0.15);
-  padding: 25px 30px;
+  box-shadow: 0 5px 20px rgba(0, 80, 80, 0.15);
+  padding: 25px 32px;
   font-family: "Vazirmatn", sans-serif;
   direction: rtl;
   color: #003333;
   text-align: right;
-}
-
-.shop-detail-page h2 {
-  color: #006666;
-  font-size: 24px;
-  font-weight: 600;
-  margin-top: 10px;
+  transition: all 0.3s ease;
 }
 
 .cover-section img {
   width: 100%;
-  height: 260px;
-  border-radius: 10px;
+  height: 320px;
+  border-radius: 12px;
   object-fit: cover;
-  margin-bottom: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #007777;
+  margin-top: 40px;
 }
 
 .info-box, .manufacturer-box, .gallery-box, .action-box {
   background: #f8f9fa;
-  border-radius: 10px;
-  padding: 15px;
-  margin-top: 15px;
-  box-shadow: inset 0 0 5px rgba(0, 85, 85, 0.08);
-}
-
-.info-box h3, .manufacturer-box h3, .gallery-box h3, .action-box h3 {
-  color: #006666;
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.info-box p, .manufacturer-box p {
-  font-size: 14px;
-  margin: 4px 0;
+  border-radius: 12px;
+  padding: 18px;
+  margin-top: 22px;
+  box-shadow: inset 0 0 7px rgba(0,85,85,0.08);
 }
 
 .gallery {
@@ -54,55 +43,46 @@
   gap: 10px;
 }
 .gallery img {
-  width: 120px;
-  height: 120px;
-  border-radius: 8px;
+  width: 130px;
+  height: 130px;
+  border-radius: 10px;
   object-fit: cover;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0,128,128,0.2);
+  transition: transform 0.25s ease;
+}
+.gallery img:hover {
+  transform: scale(1.06);
+}
+
+.empty-gallery {
+  text-align: center;
+  color: #888;
+  font-style: italic;
 }
 
 .btn-back {
-  background: #006666;
-  color: #fff;
+  background: #009688;
+  color: white;
   border: none;
   border-radius: 8px;
   padding: 8px 14px;
   cursor: pointer;
   margin-bottom: 10px;
-  transition: background 0.3s ease;
+  font-family: "Vazirmatn";
 }
-.btn-back:hover {
-  background: #00aaaa;
-}
+.btn-back:hover { background: #00aaaa; }
 
-.btn, .btn-edit, .btn-delete {
+.action-box button {
+  background: #00695c;
+  color: white;
+  margin: 6px;
+  padding: 8px 14px;
   border: none;
   border-radius: 8px;
-  padding: 10px 14px;
-  margin-right: 8px;
-  margin-top: 5px;
   cursor: pointer;
-  font-size: 14px;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
-.btn {
-  background: #009999;
-  color: #fff;
-}
-.btn-edit {
-  background: #00b3b3;
-  color: #fff;
-}
-.btn-delete {
-  background: #cc0000;
-  color: #fff;
-}
-.btn:hover, .btn-edit:hover, .btn-delete:hover {
+.action-box button:hover {
+  background: #00a7a7;
   transform: translateY(-2px);
-}
-
-.loading {
-  text-align: center;
-  color: #666;
-  margin-top: 50px;
 }

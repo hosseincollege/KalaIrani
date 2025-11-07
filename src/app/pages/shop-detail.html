@@ -1,48 +1,69 @@
-<div class="shop-detail-page" [hidden]="loading">
+<div class="shop-detail-page" *ngIf="!loading; else loadingBlock">
   <button class="btn-back" (click)="goBack()">🔙 بازگشت به لیست فروشگاه‌ها</button>
 
+  <!-- ✅ بخش کاور فروشگاه -->
   <div class="cover-section">
-    <img [src]="coverSrc" alt="کاور فروشگاه"/>
+    <img [src]="coverSrc" [alt]="shop.name" (error)="handleImageError(shop)">
   </div>
 
-  <h2>{{ shop?.name }}</h2>
-  <p class="desc">{{ shop?.description }}</p>
-
+  <!-- ✅ اطلاعات پایه فروشگاه -->
   <div class="info-box">
-    <h3>🧱 مشخصات فروشگاه</h3>
-    <p>دسته‌بندی: <strong>{{ shop?.category }}</strong></p>
-    <p>زمینه صنعتی: <strong>{{ shop?.industrialField }}</strong></p>
-    <p>استان: <strong>{{ shop?.province }}</strong></p>
-    <p>شهر: <strong>{{ shop?.city }}</strong></p>
-    <p>نشانی: {{ shop?.address }}</p>
-    <p>سال تأسیس: {{ shop?.establishedYear }}</p>
-    <p>تلفن تماس: <strong>{{ shop?.phone }}</strong></p>
-    <p>ایمیل: <strong>{{ shop?.email }}</strong></p>
-    <p>وب‌سایت: <a [href]="shop?.website" target="_blank">{{ shop?.website }}</a></p>
+    <h2>{{ shop.name || 'بدون نام' }}</h2>
+    <p>{{ shop.description || 'توضیحات ثبت نشده.' }}</p>
+
+    <p><strong>دسته‌بندی:</strong> {{ shop.category }}</p>
+    <p><strong>زمینه صنعتی:</strong> {{ shop.industrialField }}</p>
+    <p><strong>استان:</strong> {{ shop.province }}</p>
+    <p><strong>شهر:</strong> {{ shop.city }}</p>
+    <p><strong>نشانی:</strong> {{ shop.address }}</p>
+    <p><strong>سال تأسیس:</strong> {{ shop.establishedYear }}</p>
+    <p><strong>تلفن:</strong> {{ shop.phone }}</p>
+    <p><strong>ایمیل:</strong> {{ shop.email }}</p>
+    <p><strong>وبسایت:</strong> {{ shop.website }}</p>
   </div>
 
+  <!-- ✅ اطلاعات کارخانه / کارگاه -->
   <div class="manufacturer-box">
-    <h3>🏭 اطلاعات کارخانه یا شرکت تولیدی</h3>
-    <p>نام: <strong>{{ shop?.manufacturerName }}</strong></p>
-    <p>نوع نهاد: <strong>{{ shop?.manufacturerType }}</strong></p>
-    <p>نوع نمایندگی: <strong>{{ shop?.branchType }}</strong></p>
-    <p>شماره مجوز: {{ shop?.licenseNumber }}</p>
-    <p>شماره قرارداد همکاری: {{ shop?.contractNumber }}</p>
+    <h3>🏭 اطلاعات کارخانه / کارگاه</h3>
+    <p><strong>نام تولیدکننده:</strong> {{ shop.manufacturerName }}</p>
+    <p><strong>نوع نهاد:</strong> {{ shop.manufacturerType }}</p>
+    <p><strong>نوع نمایندگی:</strong> {{ shop.branchType }}</p>
+    <p><strong>شماره مجوز:</strong> {{ shop.licenseNumber }}</p>
+    <p><strong>شماره قرارداد همکاری:</strong> {{ shop.contractNumber }}</p>
   </div>
 
-  <div class="gallery-box" *ngIf="galleryItems.length > 0">
-    <h3>🖼️ گالری تصاویر</h3>
-    <div class="gallery">
-      <img *ngFor="let g of galleryItems" [src]="g" alt="گالری"/>
+  <!-- ✅ گالری -->
+  <div class="gallery-box">
+    <h3>🖼️ گالری تجهیزات و محصولات</h3>
+    <div class="gallery" *ngIf="galleryItems.length > 0; else emptyGallery">
+      <img *ngFor="let g of galleryItems" [src]="g" alt="تصویر گالری">
+    </div>
+    <ng-template #emptyGallery>
+      <div class="empty-gallery">گالری ثبت نشده است.</div>
+    </ng-template>
+  </div>
+
+  <!-- ✅ محصولات -->
+  <div class="info-box">
+    <h3>📦 محصولات فروشگاه</h3>
+    <div *ngFor="let p of products">
+      <img [src]="p.imageUrl" alt="{{ p.name }}" (error)="handleImageError(p)">
+      <h4>{{ p.name }}</h4>
+      <p>{{ p.description }}</p>
+      <p><strong>💰 قیمت:</strong> {{ p.price | currency:'IRR':'symbol':'1.0' }}</p>
     </div>
   </div>
 
-  <div class="action-box" [hidden]="!isOwner">
-    <h3>⚙️ عملیات مدیریتی</h3>
-    <button class="btn" (click)="goToProducts(shop.id)">📦 مدیریت محصولات</button>
-    <button class="btn-edit" (click)="editShop(shop.id)">✏️ ویرایش فروشگاه</button>
-    <button class="btn-delete" (click)="deleteShop(shop.id)">🗑️ حذف فروشگاه</button>
+  <!-- ✅ عملیات مدیریتی -->
+  <div class="action-box" *ngIf="isOwner">
+    <button (click)="manageProducts(shop.id)">📦 مدیریت محصولات</button>
+    <button (click)="editShop(shop.id)">✏️ ویرایش فروشگاه</button>
+    <button (click)="deleteShop(shop.id)">🗑️ حذف فروشگاه</button>
   </div>
+
+  <p class="note">🇮🇷 حمایت از تولید ملی — با خرید از این فروشگاه، از تولیدکننده داخلی پشتیبانی کنید 💪</p>
 </div>
 
-<div class="loading" *ngIf="loading">در حال بارگذاری...</div>
+<ng-template #loadingBlock>
+  <div class="loading">⏳ در حال بارگذاری اطلاعات...</div>
+</ng-template>

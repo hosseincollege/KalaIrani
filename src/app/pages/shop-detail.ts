@@ -1,4 +1,4 @@
-// File: src/app/pages/shop-detail.ts
+// src/app/pages/shop-detail.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,9 +15,11 @@ import { AuthService } from '../auth.service';
 export class ShopDetailPage implements OnInit {
   shop: any = null;
   loading = true;
-  coverSrc = '';
+  coverSrc: string = '';
   galleryItems: string[] = [];
-  isOwner: boolean = false;
+  products: any[] = [];
+  isOwner = false;
+  fallbackImage = 'assets/no-image.png';
 
   constructor(
     private route: ActivatedRoute,
@@ -32,24 +34,19 @@ export class ShopDetailPage implements OnInit {
     this.loadShop(id, currentUser);
   }
 
+  // 🔹 بارگذاری جزئیات فروشگاه
   loadShop(id: number, currentUser: string | null) {
+    this.loading = true;
     this.shopService.getById(id).subscribe({
       next: (res) => {
         this.shop = res;
         this.loading = false;
 
-        // ✅ مسیر کامل کاور
-        this.coverSrc = res.coverImagePath
-          ? `http://localhost:5189${res.coverImagePath}`
-          : 'assets/img/no-cover.png';
+        this.coverSrc = res.coverImagePath || this.fallbackImage;
+        this.galleryItems = res.galleryPaths || [];
 
-        // ✅ گالری پایدار
-        this.galleryItems = (res.galleryPaths || []).map(
-          (g: string) => `http://localhost:5189${g}`
-        );
-
-        // ✅ تشخیص مالکیت ولی بدون نمایش نام کاربری
         this.isOwner = Boolean(currentUser && currentUser === res.owner);
+        this.loadProducts(id);
       },
       error: (err) => {
         console.error('❌ خطا در دریافت جزئیات فروشگاه:', err);
@@ -58,10 +55,25 @@ export class ShopDetailPage implements OnInit {
     });
   }
 
-  goToProducts(shopId: number) {
-    this.router.navigate(['/shops', shopId, 'products']);
+  // 🔹 بارگذاری محصولات
+  loadProducts(shopId: number) {
+    this.shopService.getProductsByShop(shopId).subscribe({
+      next: (data) => {
+        this.products = (data || []).map((p: any) => ({
+          ...p,
+          imageUrl: p.imagePath ? `http://localhost:5189${p.imagePath}` : this.fallbackImage
+        }));
+      },
+      error: (err) => console.error('❌ خطا در دریافت محصولات:', err)
+    });
   }
 
+  // 🔹 هندل خطا تصاویر
+  handleImageError(item: any) {
+    item.imageUrl = this.fallbackImage;
+  }
+
+  // 🔹 عملیات مدیریتی
   goBack() {
     this.router.navigate(['/shops']);
   }
@@ -70,17 +82,31 @@ export class ShopDetailPage implements OnInit {
     this.router.navigate(['/edit-shop', id]);
   }
 
+  // 🔹 حذف فروشگاه – فقط توسط صاحب آن
   deleteShop(id: number) {
     if (!confirm('آیا از حذف این فروشگاه اطمینان دارید؟')) return;
-    this.shopService.deleteShop(id).subscribe({
+
+    const username = this.auth.getUsername(); // <<< نام کاربر فعلی
+    if (!username) {
+      alert('ابتدا وارد حساب کاربری شوید.');
+      return;
+    }
+
+    this.shopService.deleteShop(id, username).subscribe({
       next: () => {
         alert('✅ فروشگاه حذف شد.');
         this.router.navigate(['/shops']);
       },
       error: (err) => {
-        console.error(err);
-        alert('❌ خطا در حذف فروشگاه.');
+        if (err.status === 403)
+          alert('❌ شما مجاز به حذف این فروشگاه نیستید.');
+        else
+          alert('❌ خطا در حذف فروشگاه.');
       }
     });
+  }
+
+  manageProducts(shopId: number) {
+    this.router.navigate(['/shops', shopId, 'products']);
   }
 }

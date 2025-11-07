@@ -1,8 +1,8 @@
-// File: src/app/pages/shops.ts
+// src/app/pages/shops.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // ✅ افزودن برای ngModel
+import { FormsModule } from '@angular/forms';
 import { ShopService } from '../services/shop.service';
 import { AuthService } from '../auth.service';
 
@@ -15,99 +15,69 @@ import { AuthService } from '../auth.service';
 })
 export class ShopsPage implements OnInit {
   shops: any[] = [];
-  filteredShops: any[] = [];
   loading = true;
+  fallbackImage = 'assets/no-image.png';
   currentUser: string | null = null;
 
-  // 🔹 فیلترها و داده‌ها
-  categoryFilter = '';
-  provinceFilter = '';
-  categories = ['الکترونیکی', 'صنعتی', 'فلزی', 'خوراکی', 'پوشاک'];
-  provinces = ['تهران', 'اصفهان', 'فارس', 'گیلان', 'خوزستان'];
-
-  fallbackImage = 'assets/no-image.png';
-
-  constructor(
-    private shopService: ShopService,
-    private auth: AuthService,
-    private router: Router
-  ) {}
+  constructor(private service: ShopService, private auth: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.currentUser = this.auth.getUsername();
+    this.currentUser = this.auth.getUsername() || localStorage.getItem('username');
     this.loadShops();
   }
 
+  // دریافت لیست فروشگاه‌ها
   loadShops() {
     this.loading = true;
-    this.shopService.getAll().subscribe({
-      next: (data) => {
-        this.shops = (data || []).map(shop => ({
+    this.service.getAll().subscribe({
+      next: data => {
+        this.shops = data.map((shop: any) => ({
           ...shop,
-          safeCover: shop.coverImagePath
-            ? `http://localhost:5189${shop.coverImagePath}`
-            : this.fallbackImage
+          safeCover: shop.coverImagePath || this.fallbackImage,
+          // وضعیت مالک برای کنترل دکمه‌ها
+          isOwner: !!this.currentUser && this.currentUser === shop.owner
         }));
-        this.filteredShops = this.shops;
         this.loading = false;
       },
-      error: (err) => {
-        console.error('❌ خطا در دریافت فروشگاه‌ها:', err);
+      error: err => {
+        console.error('❌ خطا در دریافت اطلاعات:', err);
         this.loading = false;
       }
     });
   }
 
-  // ✅ اعمال فیلترها
-  applyFilters() {
-    this.filteredShops = this.shops.filter(shop => {
-      const matchCategory = !this.categoryFilter || shop.category === this.categoryFilter;
-      const matchProvince = !this.provinceFilter || shop.city === this.provinceFilter;
-      return matchCategory && matchProvince;
-    });
-  }
+  goToCreateShop() { this.router.navigate(['/create-shop']); }
+  goToDetail(id: number) { this.router.navigate(['/shop', id]); }
 
-  // ✅ هدایت‌ها
-  goToDetail(id: number) {
-    this.router.navigate(['/shop', id]);
-  }
+  // حذف با کنترل مالکیت
+  deleteShop(id: number, e: Event) {
+    e.stopPropagation();
+    if (!confirm('آیا از حذف این فروشگاه اطمینان دارید؟')) return;
 
-  goToCreateShop() {
-    this.router.navigate(['/create-shop']);
-  }
-
-  goBackToList() {
-    this.router.navigate(['/shops']);
-  }
-
-  editShop(shopId: number, event: Event) {
-    event.stopPropagation();
-    this.router.navigate(['/edit-shop', shopId]);
-  }
-
-  deleteShop(shopId: number, event: Event) {
-    event.stopPropagation();
-    if (!confirm('آیا از حذف این فروشگاه مطمئن هستید؟')) return;
-    this.shopService.deleteShop(shopId).subscribe({
+    const username = this.currentUser || '';
+    this.service.deleteShop(id, username).subscribe({
       next: () => {
         alert('✅ فروشگاه حذف شد.');
-        this.shops = this.shops.filter(s => s.id !== shopId);
-        this.filteredShops = this.shops;
+        this.shops = this.shops.filter(s => s.id !== id);
       },
-      error: (err) => {
-        console.error('❌ خطا در حذف فروشگاه:', err);
-        alert('خطا در حذف فروشگاه');
+      error: err => {
+        if (err.status === 403) alert('❌ شما مجاز به حذف این فروشگاه نیستید.');
+        else alert('❌ خطا در حذف فروشگاه.');
       }
     });
+  }
+
+  editShop(id: number, e: Event) {
+    e.stopPropagation();
+    this.router.navigate(['/edit-shop', id]);
+  }
+
+  manageProducts(shopId: number, e: Event) {
+    e.stopPropagation();
+    this.router.navigate([`/shop/${shopId}/products`]); // مسیر صحیح اصلاح شد
   }
 
   handleImageError(shop: any) {
-    if (shop.safeCover !== this.fallbackImage) {
-      shop.safeCover = this.fallbackImage;
-    }
-  }
-
-  canManage(owner: string): boolean {
-    return Boolean(this.currentUser && this.currentUser === owner);
+    shop.safeCover = this.fallbackImage;
   }
 }

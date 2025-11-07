@@ -1,49 +1,36 @@
 <div class="shops-page">
-  <div class="header-bar">
-    <h2>📋 لیست فروشگاه‌ها</h2>
-    <div class="buttons">
-      <button class="btn-create" (click)="goToCreateShop()">➕ ایجاد فروشگاه جدید</button>
-      <button class="btn-back" (click)="goBackToList()">🔙 بازگشت به صفحه اصلی</button>
-    </div>
+  <div class="shops-header">
+    <h2>🏭 فهرست فروشگاه‌ها</h2>
+    <button class="btn-create" (click)="goToCreateShop()">➕ افزودن فروشگاه جدید</button>
   </div>
 
-  <div class="filters">
-    <label>نوع فروشگاه:</label>
-    <select [(ngModel)]="categoryFilter" (change)="applyFilters()">
-      <option value="">همه</option>
-      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
-    </select>
+  <div *ngIf="loading" class="loading">⏳ در حال بارگذاری...</div>
 
-    <label>استان:</label>
-    <select [(ngModel)]="provinceFilter" (change)="applyFilters()">
-      <option value="">همه</option>
-      <option *ngFor="let p of provinces" [value]="p">{{ p }}</option>
-    </select>
-  </div>
+  <div class="shop-list" *ngIf="!loading && shops.length > 0">
+    <div class="shop-card" *ngFor="let shop of shops" (click)="goToDetail(shop.id)">
+      <div class="cover">
+        <img [src]="shop.safeCover" alt="کاور" (error)="handleImageError(shop)">
+      </div>
 
-  <div *ngIf="loading" class="loading">در حال بارگذاری...</div>
-  <div *ngIf="!loading && filteredShops.length === 0" class="empty">
-    ❗ هیچ فروشگاهی با فیلتر فعلی یافت نشد.
-  </div>
+      <div class="content">
+        <h3>{{ shop.name }}</h3>
+        <p class="desc">{{ shop.description || 'بدون توضیحات' }}</p>
+        <p class="details">🏙️ {{ shop.city }} — 🧱 {{ shop.category }}</p>
 
-  <div *ngIf="!loading && filteredShops.length > 0" class="shops-grid">
-    <div class="shop-card" *ngFor="let shop of filteredShops" (click)="goToDetail(shop.id)">
-      <img
-        [src]="shop.safeCover"
-        (error)="handleImageError(shop)"
-        alt="کاور فروشگاه"
-        class="shop-cover"
-      />
+        <!-- ✅ حذف نمایش نام صاحب برای امنیت -->
+        <p class="owner-status">🛡️ مدیریت توسط تولیدکننده تأییدشده</p>
 
-      <h3>{{ shop.name }}</h3>
-      <p class="desc">{{ shop.description }}</p>
-      <p class="meta">🏙️ {{ shop.city }} | 📂 {{ shop.category }}</p>
-      <p class="owner">👤 {{ shop.owner }}</p>
-
-      <div class="actions" *ngIf="canManage(shop.owner)">
-        <button class="edit-btn" (click)="editShop(shop.id, $event)">✏️ ویرایش</button>
-        <button class="delete-btn" (click)="deleteShop(shop.id, $event)">🗑️ حذف</button>
+        <!-- دکمه‌ها فقط برای مالک ظاهر می‌شوند -->
+        <div class="actions" *ngIf="shop.isOwner">
+          <button class="btn-edit" (click)="editShop(shop.id, $event)">✏️ ویرایش</button>
+          <button class="btn-delete" (click)="deleteShop(shop.id, $event)">🗑️ حذف</button>
+          <button class="btn-products" (click)="manageProducts(shop.id, $event)">📦 مدیریت محصولات</button>
+        </div>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="!loading && shops.length === 0" class="no-results">
+    هیچ فروشگاهی ثبت نشده است.
   </div>
 </div>
