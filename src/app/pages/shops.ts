@@ -33,8 +33,11 @@ export class ShopsPage implements OnInit {
       next: data => {
         this.shops = data.map((shop: any) => ({
           ...shop,
-          safeCover: shop.coverImagePath || this.fallbackImage,
-          // وضعیت مالک برای کنترل دکمه‌ها
+          // ساخت مسیر ایمن برای کاور — در حالت لوکال یا سرور
+          safeCover: shop.coverImage
+            ? `${shop.coverImage.startsWith('http') ? '' : environment.apiUrl + '/uploads/'}${shop.coverImage}`
+            : this.fallbackImage,
+          // بررسی مالک فروشگاه برای نمایش دکمه‌ها
           isOwner: !!this.currentUser && this.currentUser === shop.owner
         }));
         this.loading = false;
