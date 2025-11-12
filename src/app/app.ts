@@ -1,38 +1,43 @@
-// File: src/app/app.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
 import { AuthService } from './auth.service';
-import { HttpClientModule } from '@angular/common/http'; // ✅ ضروری برای استفاده از HttpClient در سرویس‌ها
 
 @Component({
-  standalone: true,
   selector: 'app-root',
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    HttpClientModule // ✅ اضافه شد
-  ],
-  template: `
-    <router-outlet></router-outlet>
-  `,
+  standalone: true,
+  imports: [CommonModule, RouterLink, RouterOutlet],
+  templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
-export class AppComponent implements OnInit {
-  title = 'Kalairani.client';
-  isLoggedIn: boolean = false;
+export class AppComponent {
+  isMenuOpen = false;
+  isLoggedIn = false;
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit() {
-    // 🔹 اشتراک در وضعیت ورود
-    this.auth.isLoggedIn$.subscribe(status => {
-      this.isLoggedIn = status;
-    });
+    this.isLoggedIn = this.auth.isLoggedIn();
+    // 🔹 مشترک شو تا وقتی login/logout انجام شد منو آپدیت بشه
+    this.auth.isLoggedIn$.subscribe(state => this.isLoggedIn = state);
   }
 
-  // 🔹 متد logout (اگر نیاز به دکمه خروج سراسری باشد)
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+    const menu = document.querySelector('.side-menu');
+    const menuBtn = document.querySelector('.menu-btn');
+    if (this.isMenuOpen && menu && menuBtn && !menu.contains(target) && !menuBtn.contains(target)) {
+      this.isMenuOpen = false;
+    }
+  }
+
   logout() {
     this.auth.logout();
+    this.router.navigate(['/']);
   }
 }

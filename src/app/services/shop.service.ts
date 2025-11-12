@@ -2,12 +2,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ShopService {
-  private apiUrl = `${environment.apiUrl}/shops`;
-  private productsUrl = `${environment.apiUrl}/products`;
+  private apiUrl = 'http://localhost:5189/api/shops';
+  private productsUrl = 'http://localhost:5189/api/products';
 
   constructor(private http: HttpClient) {}
 
@@ -31,7 +30,7 @@ export class ShopService {
     return this.http.put<any>(`${this.apiUrl}/${id}`, data);
   }
 
-  // ✅ حذف فروشگاه (ارسال نام کاربر جهت کنترل دسترسی)
+  // ✅ حذف فروشگاه (ارسال owner جهت کنترل دسترسی)
   deleteShop(id: number, username: string): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}?username=${username}`);
   }
@@ -41,12 +40,12 @@ export class ShopService {
     return this.http.get<any[]>(`${this.productsUrl}/by-shop/${shopId}`);
   }
 
-  // ✅ حذف یک محصول خاص
+  // ✅ حذف محصول
   deleteProduct(productId: number): Observable<any> {
     return this.http.delete<any>(`${this.productsUrl}/${productId}`);
   }
 
-  // ✅ افزودن محصول جدید به یک فروشگاه
+  // ✅ افزودن محصول به فروشگاه
   createProduct(shopId: number, productData: FormData): Observable<any> {
     return this.http.post<any>(`${this.productsUrl}/create/${shopId}`, productData);
   }
