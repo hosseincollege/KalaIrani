@@ -1,47 +1,38 @@
-import { Component, HostListener } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+// File: src/app/app.ts
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 import { AuthService } from './auth.service';
+import { HttpClientModule } from '@angular/common/http'; // ✅ ضروری برای استفاده از HttpClient در سرویس‌ها
 
 @Component({
-  selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet],
-  templateUrl: './app.html',
+  selector: 'app-root',
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    HttpClientModule // ✅ اضافه شد
+  ],
+  template: `
+    <router-outlet></router-outlet>
+  `,
   styleUrls: ['./app.css']
 })
-export class AppComponent {
-  isMenuOpen = false;
-  isLoggedIn = false;
+export class AppComponent implements OnInit {
+  title = 'Kalairani.client';
+  isLoggedIn: boolean = false;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService) {}
 
   ngOnInit() {
-    this.isLoggedIn = this.auth.isLoggedIn();
-    // 🔹 مشترک شو تا وقتی login/logout انجام شد منو آپدیت بشه
-<<<<<<< HEAD
-    this.auth.isLoggedIn$.subscribe((state: boolean) => this.isLoggedIn = state);
-=======
-    this.auth.isLoggedIn$.subscribe(state => this.isLoggedIn = state);
->>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
+    // 🔹 اشتراک در وضعیت ورود
+    this.auth.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
+    });
   }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
-
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: Event) {
-    const target = event.target as HTMLElement;
-    const menu = document.querySelector('.side-menu');
-    const menuBtn = document.querySelector('.menu-btn');
-    if (this.isMenuOpen && menu && menuBtn && !menu.contains(target) && !menuBtn.contains(target)) {
-      this.isMenuOpen = false;
-    }
-  }
-
+  // 🔹 متد logout (اگر نیاز به دکمه خروج سراسری باشد)
   logout() {
     this.auth.logout();
-    this.router.navigate(['/']);
   }
 }
