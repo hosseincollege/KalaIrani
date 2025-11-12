@@ -23,6 +23,10 @@ export const routes: Routes = [
     path: 'edit-shop/:id',
     loadComponent: () => import('./pages/create-shop').then(m => m.CreateShopPage)
   },
+<<<<<<< HEAD
+=======
+  // ✅ مسیر جدید برای مدیریت محصولات فروشگاه
+>>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
   {
     path: 'shop/:id/products',
     loadComponent: () => import('./pages/products').then(m => m.ProductsPage)
@@ -36,10 +40,13 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/login').then(m => m.LoginPage)
   },
   {
+<<<<<<< HEAD
     path: 'register',
     loadComponent: () => import('./pages/register').then(m => m.RegisterPage)
   },
   {
+=======
+>>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
     path: '**',
     redirectTo: ''
   }

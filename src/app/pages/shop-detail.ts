@@ -42,6 +42,7 @@ export class ShopDetailPage implements OnInit {
         this.shop = res;
         this.loading = false;
 
+<<<<<<< HEAD
         this.coverSrc = res.coverImage
           ? `http://localhost:3000/uploads/${res.coverImage}`
           : this.fallbackImage;
@@ -50,6 +51,10 @@ export class ShopDetailPage implements OnInit {
           (img: string) => `http://localhost:3000/uploads/${img}`
         );
 
+=======
+        this.coverSrc = res.coverImagePath || this.fallbackImage;
+        this.galleryItems = res.galleryPaths || [];
+>>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
 
         this.isOwner = Boolean(currentUser && currentUser === res.owner);
         this.loadProducts(id);

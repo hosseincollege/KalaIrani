@@ -40,7 +40,11 @@ export class AccountPage implements OnInit {
             .map(s => ({
               ...s,
               safeCover: s.coverImage
+<<<<<<< HEAD
                 ? `http://localhost:3000/uploads/${s.coverImage}` // ✅ مسیر درست به بک‌اند
+=======
+                ? `http://localhost:5189${s.coverImage}`
+>>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
                 : this.fallbackImage
             }));
           this.loading = false;

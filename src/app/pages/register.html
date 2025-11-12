@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h2>ثبت‌نام کاربر جدید</h2>
 
 <div>
@@ -19,3 +20,28 @@
 
 <p>{{ message }}</p>
 <p><a routerLink="/login">اکانت داری؟ ورود</a></p>
+=======
+
+<div class="form-container">
+  <h2>ثبت‌نام کاربر جدید</h2>
+
+  <form (ngSubmit)="register()" class="form-box">
+    <label>نام کاربری:</label>
+    <input type="text" [(ngModel)]="username" name="username" required />
+
+    <label>ایمیل:</label>
+    <input type="email" [(ngModel)]="email" name="email" required />
+
+    <label>رمز عبور:</label>
+    <input type="password" [(ngModel)]="password" name="password" required />
+
+    <button type="submit">ثبت‌نام</button>
+  </form>
+
+  <p *ngIf="message" [ngClass]="{ 'error': isError, 'success': !isError }">
+    {{ message }}
+  </p>
+
+  <p class="text-link">اکانت داری؟ <a routerLink="/login">ورود</a></p>
+</div>
+>>>>>>> 88e9041861669a3a0678de86b04a953c64d33559

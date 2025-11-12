@@ -19,7 +19,11 @@ export class AppComponent {
   ngOnInit() {
     this.isLoggedIn = this.auth.isLoggedIn();
     // 🔹 مشترک شو تا وقتی login/logout انجام شد منو آپدیت بشه
+<<<<<<< HEAD
     this.auth.isLoggedIn$.subscribe((state: boolean) => this.isLoggedIn = state);
+=======
+    this.auth.isLoggedIn$.subscribe(state => this.isLoggedIn = state);
+>>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
   }
 
   toggleMenu() {

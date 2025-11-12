@@ -2,7 +2,11 @@
 
 <div>
   <label>نام کاربری:</label>
+<<<<<<< HEAD
   <input [(ngModel)]="username" />
+=======
+  <input [(ngModel)]="username" type="text" />
+>>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
 </div>
 
 <div>
@@ -10,7 +14,16 @@
   <input [(ngModel)]="password" type="password" />
 </div>
 
+<<<<<<< HEAD
 <button (click)="login()" [disabled]="loading">ورود</button>
 
 <p>{{ message }}</p>
 <p><a routerLink="/register">اکانت نداری؟ ثبت‌نام</a></p>
+=======
+<button (click)="login()">ورود</button>
+
+<p [style.color]="isError ? 'red' : 'green'">{{ message }}</p>
+
+<hr />
+<p>اکانت نداری؟ <a routerLink="/register">ثبت‌نام</a></p>
+>>>>>>> 88e9041861669a3a0678de86b04a953c64d33559

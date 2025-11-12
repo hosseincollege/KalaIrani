@@ -33,11 +33,16 @@ export class ShopsPage implements OnInit {
       next: data => {
         this.shops = data.map((shop: any) => ({
           ...shop,
+<<<<<<< HEAD
           // ✅ ساخت آدرس کامل کاور از بک‌اند
           safeCover: shop.coverImage
             ? `http://localhost:3000/uploads/${shop.coverImage}`
             : this.fallbackImage,
           // ✅ وضعیت مالک برای کنترل دکمه‌ها
+=======
+          safeCover: shop.coverImagePath || this.fallbackImage,
+          // وضعیت مالک برای کنترل دکمه‌ها
+>>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
           isOwner: !!this.currentUser && this.currentUser === shop.owner
         }));
         this.loading = false;
@@ -49,7 +54,10 @@ export class ShopsPage implements OnInit {
     });
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
   goToCreateShop() { this.router.navigate(['/create-shop']); }
   goToDetail(id: number) { this.router.navigate(['/shop', id]); }
 
