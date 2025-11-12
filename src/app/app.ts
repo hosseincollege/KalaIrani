@@ -1,12 +1,19 @@
+// File: src/app/app.ts
 import { Component, HostListener } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './auth.service';
+import { HttpClientModule } from '@angular/common/http'; // ✅ ایمپورت ضروری
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet],
+  imports: [
+    CommonModule, 
+    RouterLink, 
+    RouterOutlet, 
+    HttpClientModule // ✅ اضافه کردن به لیست ایمپورت‌ها
+  ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
