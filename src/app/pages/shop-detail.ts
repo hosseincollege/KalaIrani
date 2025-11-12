@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShopService } from '../services/shop.service';
 import { AuthService } from '../auth.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   standalone: true,
@@ -42,8 +43,14 @@ export class ShopDetailPage implements OnInit {
         this.shop = res;
         this.loading = false;
 
-        this.coverSrc = res.coverImagePath || this.fallbackImage;
-        this.galleryItems = res.galleryPaths || [];
+        this.coverSrc = res.coverImage
+          ? `${res.coverImage.startsWith('http') ? '' : environment.apiUrl + '/uploads/'}${res.coverImage}`
+          : this.fallbackImage;
+
+        this.galleryItems = (res.gallery || []).map((g: string) =>
+          `${g.startsWith('http') ? '' : environment.apiUrl + '/uploads/'}${g}`
+        );
+
 
         this.isOwner = Boolean(currentUser && currentUser === res.owner);
         this.loadProducts(id);
