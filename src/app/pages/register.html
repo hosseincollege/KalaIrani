@@ -1,31 +1,23 @@
-<div class="register-container">
+
+<div class="form-container">
   <h2>ثبت‌نام کاربر جدید</h2>
 
-  <form (ngSubmit)="register()">
-    <div class="form-group">
-      <label for="username">نام کاربری:</label>
-      <input id="username" type="text" [(ngModel)]="username" name="username" required>
-    </div>
+  <form (ngSubmit)="register()" class="form-box">
+    <label>نام کاربری:</label>
+    <input type="text" [(ngModel)]="username" name="username" required />
 
-    <div class="form-group">
-      <label for="email">ایمیل:</label>
-      <input id="email" type="email" [(ngModel)]="email" name="email" required>
-    </div>
+    <label>ایمیل:</label>
+    <input type="email" [(ngModel)]="email" name="email" required />
 
-    <div class="form-group">
-      <label for="password">رمز عبور:</label>
-      <input id="password" type="password" [(ngModel)]="password" name="password" required>
-    </div>
+    <label>رمز عبور:</label>
+    <input type="password" [(ngModel)]="password" name="password" required />
 
-    <button type="submit" [disabled]="loading || !username || !email || !password">
-      <span *ngIf="!loading">ثبت‌نام</span>
-      <span *ngIf="loading">در حال ثبت‌نام...</span>
-    </button>
+    <button type="submit">ثبت‌نام</button>
   </form>
 
-  <p class="message">{{ message }}</p>
-
-  <p class="login-link">
-    اکانت داری؟ <a routerLink="/login">ورود</a>
+  <p *ngIf="message" [ngClass]="{ 'error': isError, 'success': !isError }">
+    {{ message }}
   </p>
+
+  <p class="text-link">اکانت داری؟ <a routerLink="/login">ورود</a></p>
 </div>

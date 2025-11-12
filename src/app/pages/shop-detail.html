@@ -1,75 +1,69 @@
-<div class="shop-detail-container" *ngIf="!loading && shop">
-  <!-- دکمه برگشت -->
-  <button (click)="goBack()" class="back-button">🔙 بازگشت به لیست فروشگاه‌ها</button>
+<div class="shop-detail-page" *ngIf="!loading; else loadingBlock">
+  <button class="btn-back" (click)="goBack()">🔙 بازگشت به لیست فروشگاه‌ها</button>
 
-  <!-- بخش اصلی فروشگاه -->
-  <div class="shop-header">
-    <img [src]="coverSrc" alt="کاور فروشگاه" class="shop-cover-image" (error)="coverSrc = fallbackImage">
-    <div class="shop-info">
-      <h1>{{ shop.name || 'بدون نام' }}</h1>
-      <p class="description">{{ shop.description || 'توضیحات ثبت نشده.' }}</p>
-      
-      <!-- جزئیات اصلی -->
-      <p><strong>دسته‌بندی:</strong> {{ shop.category }}</p>
-      <p><strong>زمینه صنعتی:</strong> {{ shop.industrialField }}</p>
-      <p><strong>استان/شهر:</strong> {{ shop.province }} / {{ shop.city }}</p>
-      <p><strong>نشانی:</strong> {{ shop.address }}</p>
+  <!-- ✅ بخش کاور فروشگاه -->
+  <div class="cover-section">
+    <img [src]="coverSrc" [alt]="shop.name" (error)="handleImageError(shop)">
+  </div>
 
-      <!-- اطلاعات تماس -->
-      <h3>اطلاعات تماس</h3>
-      <p><strong>تلفن:</strong> {{ shop.phone || '-' }}</p>
-      <p><strong>ایمیل:</strong> {{ shop.email || '-' }}</p>
-      <p><strong>وبسایت:</strong> <a [href]="shop.website" target="_blank">{{ shop.website || '-' }}</a></p>
+  <!-- ✅ اطلاعات پایه فروشگاه -->
+  <div class="info-box">
+    <h2>{{ shop.name || 'بدون نام' }}</h2>
+    <p>{{ shop.description || 'توضیحات ثبت نشده.' }}</p>
+
+    <p><strong>دسته‌بندی:</strong> {{ shop.category }}</p>
+    <p><strong>زمینه صنعتی:</strong> {{ shop.industrialField }}</p>
+    <p><strong>استان:</strong> {{ shop.province }}</p>
+    <p><strong>شهر:</strong> {{ shop.city }}</p>
+    <p><strong>نشانی:</strong> {{ shop.address }}</p>
+    <p><strong>سال تأسیس:</strong> {{ shop.establishedYear }}</p>
+    <p><strong>تلفن:</strong> {{ shop.phone }}</p>
+    <p><strong>ایمیل:</strong> {{ shop.email }}</p>
+    <p><strong>وبسایت:</strong> {{ shop.website }}</p>
+  </div>
+
+  <!-- ✅ اطلاعات کارخانه / کارگاه -->
+  <div class="manufacturer-box">
+    <h3>🏭 اطلاعات کارخانه / کارگاه</h3>
+    <p><strong>نام تولیدکننده:</strong> {{ shop.manufacturerName }}</p>
+    <p><strong>نوع نهاد:</strong> {{ shop.manufacturerType }}</p>
+    <p><strong>نوع نمایندگی:</strong> {{ shop.branchType }}</p>
+    <p><strong>شماره مجوز:</strong> {{ shop.licenseNumber }}</p>
+    <p><strong>شماره قرارداد همکاری:</strong> {{ shop.contractNumber }}</p>
+  </div>
+
+  <!-- ✅ گالری -->
+  <div class="gallery-box">
+    <h3>🖼️ گالری تجهیزات و محصولات</h3>
+    <div class="gallery" *ngIf="galleryItems.length > 0; else emptyGallery">
+      <img *ngFor="let g of galleryItems" [src]="g" alt="تصویر گالری">
+    </div>
+    <ng-template #emptyGallery>
+      <div class="empty-gallery">گالری ثبت نشده است.</div>
+    </ng-template>
+  </div>
+
+  <!-- ✅ محصولات -->
+  <div class="info-box">
+    <h3>📦 محصولات فروشگاه</h3>
+    <div *ngFor="let p of products">
+      <img [src]="p.imageUrl" alt="{{ p.name }}" (error)="handleImageError(p)">
+      <h4>{{ p.name }}</h4>
+      <p>{{ p.description }}</p>
+      <p><strong>💰 قیمت:</strong> {{ p.price | currency:'IRR':'symbol':'1.0' }}</p>
     </div>
   </div>
 
-  <!-- عملیات مدیریتی (فقط برای مالک) -->
-  <div class="owner-actions" *ngIf="isOwner">
-    <h3>عملیات فروشگاه</h3>
-    <button (click)="editShop(shop.id)" class="edit-button">✏️ ویرایش فروشگاه</button>
-    <button (click)="deleteShop(shop.id)" class="delete-button">🗑️ حذف فروشگاه</button>
-    <!-- ✅ اصلاح شد: استفاده از routerLink به جای متد خطا‌دهنده manageProducts -->
-    <button [routerLink]="['/shop', shop.id, 'products']" class="manage-products-button">📦 مدیریت محصولات</button>
-  </div>
-  
-  <!-- گالری تصاویر -->
-  <div class="gallery-section" *ngIf="galleryItems.length > 0">
-    <h2>🖼️ گالری تجهیزات و محصولات</h2>
-    <div class="gallery-grid">
-      <img *ngFor="let item of galleryItems" [src]="item" alt="تصویر گالری">
-    </div>
-  </div>
-  <div class="gallery-section" *ngIf="galleryItems.length === 0">
-    <p>گالری ثبت نشده است.</p>
+  <!-- ✅ عملیات مدیریتی -->
+  <div class="action-box" *ngIf="isOwner">
+    <button (click)="manageProducts(shop.id)">📦 مدیریت محصولات</button>
+    <button (click)="editShop(shop.id)">✏️ ویرایش فروشگاه</button>
+    <button (click)="deleteShop(shop.id)">🗑️ حذف فروشگاه</button>
   </div>
 
-  <!-- محصولات -->
-  <div class="products-section">
-    <h2>📦 محصولات فروشگاه</h2>
-    <div *ngIf="products.length === 0" class="no-products">
-      <p>محصولی برای این فروشگاه ثبت نشده است.</p>
-    </div>
-    <div class="products-grid" *ngIf="products.length > 0">
-      <div class="product-card" *ngFor="let p of products">
-        <img [src]="p.imageUrl" alt="{{ p.name }}" (error)="handleImageError(p)">
-        <h4>{{ p.name }}</h4>
-        <p>{{ p.description }}</p>
-        <!-- ⚠️ اصلاح pipe واحد پول: برای واحد پولی ایران (ریال/تومان) بهتر است از '1.0-0' استفاده شود تا اعشار نداشته باشد -->
-        <p class="price"><strong>💰 قیمت:</strong> {{ p.price | currency:'IRR':'symbol':'1.0-0' }}</p>
-      </div>
-    </div>
-  </div>
-  
-  <div class="national-support">
-    🇮🇷 حمایت از تولید ملی — با خرید از این فروشگاه، از تولیدکننده داخلی پشتیبانی کنید 💪
-  </div>
+  <p class="note">🇮🇷 حمایت از تولید ملی — با خرید از این فروشگاه، از تولیدکننده داخلی پشتیبانی کنید 💪</p>
 </div>
 
-<div *ngIf="loading" class="loading-state">
-  ⏳ در حال بارگذاری اطلاعات...
-</div>
-
-<div *ngIf="!loading && !shop" class="error-state">
-  <p>فروشگاهی با این شناسه پیدا نشد.</p>
-  <button (click)="goBack()">بازگشت به لیست</button>
-</div>
+<ng-template #loadingBlock>
+  <div class="loading">⏳ در حال بارگذاری اطلاعات...</div>
+</ng-template>

@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ShopService } from '../services/shop.service';
 import { AuthService } from '../auth.service';
-import { environment } from '../../environments/environment';
 
 @Component({
   standalone: true,
@@ -27,18 +26,15 @@ export class ShopsPage implements OnInit {
     this.loadShops();
   }
 
-  // ✅ دریافت لیست فروشگاه‌ها
+  // دریافت لیست فروشگاه‌ها
   loadShops() {
     this.loading = true;
     this.service.getAll().subscribe({
       next: data => {
         this.shops = data.map((shop: any) => ({
           ...shop,
-          // ساخت مسیر ایمن برای کاور — در حالت لوکال یا سرور
-          safeCover: shop.coverImage
-            ? `${shop.coverImage.startsWith('http') ? '' : environment.apiUrl + '/uploads/'}${shop.coverImage}`
-            : this.fallbackImage,
-          // بررسی مالک فروشگاه برای نمایش دکمه‌ها
+          safeCover: shop.coverImagePath || this.fallbackImage,
+          // وضعیت مالک برای کنترل دکمه‌ها
           isOwner: !!this.currentUser && this.currentUser === shop.owner
         }));
         this.loading = false;
@@ -50,15 +46,10 @@ export class ShopsPage implements OnInit {
     });
   }
 
-  goToCreateShop() {
-    this.router.navigate(['/create-shop']);
-  }
+  goToCreateShop() { this.router.navigate(['/create-shop']); }
+  goToDetail(id: number) { this.router.navigate(['/shop', id]); }
 
-  goToDetail(id: number) {
-    this.router.navigate(['/shop', id]);
-  }
-
-  // ✅ حذف فروشگاه با کنترل مالکیت
+  // حذف با کنترل مالکیت
   deleteShop(id: number, e: Event) {
     e.stopPropagation();
     if (!confirm('آیا از حذف این فروشگاه اطمینان دارید؟')) return;
@@ -81,13 +72,11 @@ export class ShopsPage implements OnInit {
     this.router.navigate(['/edit-shop', id]);
   }
 
-  // ✅ مدیریت محصولات فروشگاه
   manageProducts(shopId: number, e: Event) {
     e.stopPropagation();
-    this.router.navigate([`/shop/${shopId}/products`]);
+    this.router.navigate([`/shop/${shopId}/products`]); // مسیر صحیح اصلاح شد
   }
 
-  // ✅ هندل کردن خطای تصویر (در صورتی که فایل پیدا نشود)
   handleImageError(shop: any) {
     shop.safeCover = this.fallbackImage;
   }

@@ -1,15 +1,14 @@
-// File: src/app/pages/shop-detail.ts
+// src/app/pages/shop-detail.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router'; 
+import { ActivatedRoute, Router } from '@angular/router';
 import { ShopService } from '../services/shop.service';
 import { AuthService } from '../auth.service';
-import { environment } from '../../environments/environment'; // ✅ اضافه شد
 
 @Component({
   standalone: true,
   selector: 'app-shop-detail',
-  imports: [CommonModule, RouterLink], 
+  imports: [CommonModule],
   templateUrl: './shop-detail.html',
   styleUrls: ['./shop-detail.css']
 })
@@ -43,15 +42,8 @@ export class ShopDetailPage implements OnInit {
         this.shop = res;
         this.loading = false;
 
-        // ✅ ساخت آدرس کامل کاور با استفاده از environment
-        this.coverSrc = res.coverImage
-          ? `${environment.apiUrl}/uploads/${res.coverImage}`
-          : this.fallbackImage;
-
-        // ✅ ساخت آدرس کامل آیتم‌های گالری با استفاده از environment
-        this.galleryItems = (res.gallery || []).map(
-          (img: string) => `${environment.apiUrl}/uploads/${img}`
-        );
+        this.coverSrc = res.coverImagePath || this.fallbackImage;
+        this.galleryItems = res.galleryPaths || [];
 
         this.isOwner = Boolean(currentUser && currentUser === res.owner);
         this.loadProducts(id);
@@ -59,20 +51,17 @@ export class ShopDetailPage implements OnInit {
       error: (err) => {
         console.error('❌ خطا در دریافت جزئیات فروشگاه:', err);
         this.loading = false;
-        // در صورت خطای 404 یا هر خطا، به صفحه فروشگاه‌ها برگرد
-        // this.router.navigate(['/shops']);
       }
     });
   }
 
-  // 🔹 بارگذاری محصولات (مسیر ProductsUrl در ShopService باید اصلاح شود)
+  // 🔹 بارگذاری محصولات
   loadProducts(shopId: number) {
     this.shopService.getProductsByShop(shopId).subscribe({
       next: (data) => {
         this.products = (data || []).map((p: any) => ({
           ...p,
-          // ✅ فرض می‌کنیم imagePath فقط نام فایل هست و نیاز به اضافه کردن apiUrl/uploads داره
-          imageUrl: p.imagePath ? `${environment.apiUrl}/uploads/${p.imagePath}` : this.fallbackImage
+          imageUrl: p.imagePath ? `http://localhost:5189${p.imagePath}` : this.fallbackImage
         }));
       },
       error: (err) => console.error('❌ خطا در دریافت محصولات:', err)
@@ -97,7 +86,7 @@ export class ShopDetailPage implements OnInit {
   deleteShop(id: number) {
     if (!confirm('آیا از حذف این فروشگاه اطمینان دارید؟')) return;
 
-    const username = this.auth.getUsername();
+    const username = this.auth.getUsername(); // <<< نام کاربر فعلی
     if (!username) {
       alert('ابتدا وارد حساب کاربری شوید.');
       return;
@@ -105,14 +94,19 @@ export class ShopDetailPage implements OnInit {
 
     this.shopService.deleteShop(id, username).subscribe({
       next: () => {
-        alert('✅ فروشگاه با موفقیت حذف شد.');
+        alert('✅ فروشگاه حذف شد.');
         this.router.navigate(['/shops']);
       },
       error: (err) => {
-        if (err.status === 403) alert('❌ شما مالک این فروشگاه نیستید.');
-        else alert('❌ خطا در حذف فروشگاه.');
-        console.error('❌ Error deleting shop:', err);
+        if (err.status === 403)
+          alert('❌ شما مجاز به حذف این فروشگاه نیستید.');
+        else
+          alert('❌ خطا در حذف فروشگاه.');
       }
     });
+  }
+
+  manageProducts(shopId: number) {
+    this.router.navigate(['/shops', shopId, 'products']);
   }
 }

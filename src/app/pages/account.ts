@@ -1,10 +1,9 @@
-// File: src/app/pages/account.ts
+// File: src/app/pages/account.ts ✅ نسخه نهایی
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { ShopService } from '../services/shop.service';
-import { environment } from '../../environments/environment';
 
 @Component({
   standalone: true,
@@ -35,13 +34,13 @@ export class AccountPage implements OnInit {
       this.loading = true;
       this.shopService.getAll().subscribe({
         next: (shops: any[]) => {
-          // فقط فروشگاه‌های مربوط به کاربر فعلی
+          // فقط فروشگاه‌های مربوط به کاربر لاگین‌شده
           this.myShops = shops
             .filter(s => s.owner === username)
             .map(s => ({
               ...s,
               safeCover: s.coverImage
-                ? `${environment.apiUrl}/uploads/${s.coverImage}`
+                ? `http://localhost:5189${s.coverImage}`
                 : this.fallbackImage
             }));
           this.loading = false;
@@ -58,10 +57,12 @@ export class AccountPage implements OnInit {
     this.router.navigate(['/create-shop']);
   }
 
+  // ⬇️ دکمه مدیریت محصولات
   manageProducts(shopId: number) {
     this.router.navigate([`/shops/${shopId}/products`]);
   }
 
+  // ⬇️ دکمه مشاهده فروشگاه
   goToShopDetail(shopId: number) {
     this.router.navigate([`/shop/${shopId}`]);
   }

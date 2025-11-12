@@ -1,4 +1,3 @@
-// File: src/app/pages/login.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,10 +15,9 @@ export class LoginPage {
   username = '';
   password = '';
   message = '';
-  loading = false;
-  isError = false; // برای استایل‌دهی به پیام خطا (اختیاری)
+  isError = false;
 
-  constructor(private router: Router, private auth: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   login() {
     if (!this.username || !this.password) {
@@ -28,24 +26,28 @@ export class LoginPage {
       return;
     }
 
-    this.loading = true;
-    this.isError = false; // پیام خطا را ریست می‌کنیم
+    const storedUser = localStorage.getItem('registeredUser');
+    if (!storedUser) {
+      this.message = '❌ هیچ کاربری در سیستم ثبت نشده است.';
+      this.isError = true;
+      return;
+    }
 
-    // اتصال به NestJS Auth Service
-    this.auth.login(this.username, this.password).subscribe({
-      next: (res: any) => {
-        const token = res?.token;
-        this.auth.storeSession(this.username, token);
-        this.message = '✅ ورود موفقیت‌آمیز بود';
-        this.loading = false;
-        setTimeout(() => this.router.navigate(['/account']), 1500);
-      },
-      error: (err) => {
-        console.error('❌ Login Error:', err);
-        this.message = '❌ نام کاربری یا رمز عبور اشتباه است.';
-        this.isError = true;
-        this.loading = false;
-      }
-    });
+    const user = JSON.parse(storedUser);
+
+    if (this.username === user.username && this.password === user.password) {
+      // ✅ ایجاد توکن ساختگی تا امضای تابع درست بشه
+      const fakeToken = 'token_' + Date.now().toString();
+
+      // ✅ اصلاح‌شده: دو پارامتر
+      this.authService.login(this.username, fakeToken);
+
+      this.message = '✅ ورود موفقیت‌آمیز بود!';
+      this.isError = false;
+      setTimeout(() => this.router.navigate(['/account']), 1500);
+    } else {
+      this.message = '❌ نام کاربری یا رمز عبور اشتباه است.';
+      this.isError = true;
+    }
   }
 }

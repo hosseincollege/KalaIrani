@@ -1,26 +1,18 @@
-<div class="login-container">
-  <h2>ورود به حساب کاربری</h2>
+<h2>ورود به حساب کاربری</h2>
 
-  <form (ngSubmit)="login()">
-    <div class="form-group">
-      <label for="username">نام کاربری:</label>
-      <input id="username" type="text" [(ngModel)]="username" name="username" required>
-    </div>
-
-    <div class="form-group">
-      <label for="password">رمز عبور:</label>
-      <input id="password" type="password" [(ngModel)]="password" name="password" required>
-    </div>
-
-    <button type="submit" [disabled]="loading || !username || !password">
-      <span *ngIf="!loading">ورود</span>
-      <span *ngIf="loading">در حال ورود...</span>
-    </button>
-  </form>
-
-  <p class="message">{{ message }}</p>
-
-  <p class="register-link">
-    اکانت نداری؟ <a routerLink="/register">ثبت‌نام</a>
-  </p>
+<div>
+  <label>نام کاربری:</label>
+  <input [(ngModel)]="username" type="text" />
 </div>
+
+<div>
+  <label>رمز عبور:</label>
+  <input [(ngModel)]="password" type="password" />
+</div>
+
+<button (click)="login()">ورود</button>
+
+<p [style.color]="isError ? 'red' : 'green'">{{ message }}</p>
+
+<hr />
+<p>اکانت نداری؟ <a routerLink="/register">ثبت‌نام</a></p>
