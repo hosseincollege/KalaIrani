@@ -1,0 +1,22 @@
+<header class="header">
+  <button class="menu-btn" (click)="toggleMenu()">☰</button>
+  <div class="logo">
+    <a routerLink="/">
+      <img src="00550.png" class="logo-img" alt="کالای ایرانی">
+      <span class="logo-text">کالای ایرانی</span>
+    </a>
+  </div>
+</header>
+
+<nav class="side-menu" [class.open]="isMenuOpen">
+  <a routerLink="/" routerLinkActive="active">خانه</a>
+  <a routerLink="/shops" routerLinkActive="active">فروشگاه‌ها</a>
+  <a *ngIf="!isLoggedIn" routerLink="/login">ورود</a>
+  <a *ngIf="!isLoggedIn" routerLink="/register">ثبت‌نام</a>
+  <a *ngIf="isLoggedIn" routerLink="/account">حساب کاربری</a>
+  <a *ngIf="isLoggedIn" (click)="logout()">خروج</a>
+</nav>
+
+<div class="page-body">
+  <router-outlet></router-outlet>
+</div>

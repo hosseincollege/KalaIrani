@@ -1,0 +1,49 @@
+<!-- ✅ نسخه نهایی Account UI -->
+<div *ngIf="isLoggedIn; else guestView" class="account-page">
+  <h2 class="account-title">👤 حساب کاربری</h2>
+  <p class="welcome-text">خوش آمدی <strong>{{ user }}</strong></p>
+
+  <div class="actions">
+    <button class="btn" (click)="goToCreateShop()">➕ ایجاد فروشگاه جدید</button>
+    <button class="btn logout" (click)="logout()">🚪 خروج</button>
+  </div>
+
+  <h3 class="shops-title">🧾 فروشگاه‌های من</h3>
+
+  <div *ngIf="loading" class="loading">در حال بارگذاری...</div>
+  <div *ngIf="!loading && myShops.length === 0" class="empty">هیچ فروشگاهی ایجاد نکرده‌اید.</div>
+
+  <div *ngIf="!loading && myShops.length > 0" class="shops-grid">
+    <div
+      class="shop-card"
+      *ngFor="let s of myShops"
+      (click)="goToShopDetail(s.id)"
+    >
+      <img
+        class="shop-cover"
+        [src]="s.safeCover"
+        (error)="handleImageError(s)"
+        alt="{{ s.name }}"
+      />
+
+      <h4>{{ s.name }}</h4>
+      <p>{{ s.description }}</p>
+
+      <div class="buttons">
+        <button class="btn manage-btn" (click)="manageProducts(s.id)">📦 مدیریت محصولات</button>
+        <button class="btn view-btn" (click)="goToShopDetail(s.id)">🔍 مشاهده فروشگاه</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- حالت مهمان -->
+<ng-template #guestView>
+  <div class="guest-page">
+    <h2 class="account-title">⚠️ لطفاً ابتدا وارد حساب کاربری شوید</h2>
+    <div class="actions">
+      <button class="btn" routerLink="/login">🔑 ورود</button>
+      <button class="btn" routerLink="/register">📝 ثبت نام</button>
+    </div>
+  </div>
+</ng-template>

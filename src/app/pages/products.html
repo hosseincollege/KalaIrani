@@ -1,0 +1,32 @@
+<div class="products-page">
+  <h2>📦 محصولات {{ shopName }}</h2>
+
+  <div class="add-product-form">
+    <input [(ngModel)]="productName" placeholder="نام محصول" />
+    <input [(ngModel)]="productPrice" type="number" placeholder="قیمت (تومان)" />
+    <input [(ngModel)]="productDescription" placeholder="توضیحات" />
+    <button class="add-btn" (click)="addProduct()">➕ افزودن</button>
+  </div>
+
+  <div class="message">{{ message }}</div>
+
+  <div *ngIf="products.length === 0">هیچ محصولی وجود ندارد.</div>
+
+  <div class="product-list" *ngIf="products.length > 0">
+    <div class="product-card" *ngFor="let p of products">
+      <div class="prod-info">
+        <strong>{{ p.name }}</strong>
+        <br />
+        قیمت: {{ p.price }} تومان
+        <br />
+        توضیحات: {{ p.description }}
+      </div>
+      <button class="delete-btn" (click)="deleteProduct(p)">❌ حذف</button>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <button class="delete-btn" (click)="clearAll()">🧨 حذف همه محصولات</button>
+    <button class="delete-btn" (click)="backToAccount()">⬅️ بازگشت به حساب</button>
+  </div>
+</div>

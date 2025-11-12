@@ -1,0 +1,111 @@
+.edit-shop-form {
+  width: 92%;
+  max-width: 740px;
+  margin: 70px auto;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 80, 80, 0.15);
+  padding: 30px 35px;
+  font-family: "Vazirmatn", sans-serif;
+  direction: rtl;
+  color: #002e2e;
+  text-align: right;
+}
+
+.edit-shop-form h2 {
+  color: #006666;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.intro {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.edit-shop-form label {
+  display: block;
+  font-weight: 600;
+  margin-top: 12px;
+  color: #004c4c;
+}
+
+.edit-shop-form input,
+.edit-shop-form select,
+.edit-shop-form textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  transition: border-color 0.25s ease;
+}
+
+.edit-shop-form input:focus,
+.edit-shop-form select:focus,
+.edit-shop-form textarea:focus {
+  border-color: #00aaaa;
+  outline: none;
+}
+
+.preview img {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-preview img {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin: 5px;
+}
+
+.btn-save {
+  margin-top: 25px;
+  width: 100%;
+  background-color: #009999;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.btn-save:hover {
+  background-color: #00b3b3;
+}
+
+.btn-back {
+  background: #006666;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.btn-back:hover {
+  background: #00aaaa;
+}
+
+.loading {
+  color: #777;
+  margin-top: 10px;
+}
+
+.message {
+  margin-top: 10px;
+  color: #006666;
+  font-weight: 500;
+}

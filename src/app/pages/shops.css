@@ -1,0 +1,143 @@
+/* src/app/pages/shops.css */
+
+.shops-page {
+  width: 90%;
+  max-width: 1050px;
+  margin: 50px auto;
+  padding: 20px;
+  font-family: "Vazirmatn", sans-serif;
+  background: #ffffff;
+  color: #003333;
+  direction: rtl;
+  text-align: right;
+}
+
+.shops-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.shops-header h2 {
+  font-size: 26px;
+  color: #007777;
+  font-weight: 700;
+}
+.btn-create {
+  background: #009999;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.btn-create:hover { background: #00cccc; }
+
+.shop-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 22px;
+  margin-top: 8px;
+}
+
+.shop-card {
+  background: #f9fefd;
+  border-radius: 14px;
+  box-shadow: 0 5px 12px rgba(0, 128, 128, 0.15);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.shop-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,128,128,0.25);
+}
+.cover img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.content {
+  padding: 14px;
+}
+.content h3 {
+  font-size: 18px;
+  color: #006666;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.desc {
+  font-size: 13px;
+  color: #555;
+  height: 45px;
+  overflow: hidden;
+}
+.details {
+  font-size: 13px;
+  margin-top: 6px;
+  color: #004c4c;
+}
+.owner {
+  font-size: 13px;
+  color: #008b8b;
+  margin-top: 5px;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.actions button {
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+.btn-edit {
+  background: #1ca7a7;
+  color: #fff;
+}
+.btn-edit:hover { background: #00cccc; transform: translateY(-2px); }
+
+.btn-delete {
+  background: #cc0000;
+  color: #fff;
+}
+.btn-delete:hover { background: #e60000; transform: translateY(-2px); }
+
+.btn-products {
+  background: #00b3b3;
+  color: #fff;
+}
+.btn-products:hover { background: #00cccc; transform: translateY(-2px); }
+
+/* غیرفعال برای کاربران غیرمالک */
+.actions button:disabled {
+  background: #cccccc !important;
+  color: #666 !important;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+.actions button:disabled:hover {
+  background: #cccccc !important;
+}
+
+.no-results {
+  text-align: center;
+  color: #666;
+  font-size: 15px;
+  margin-top: 40px;
+}
+.loading {
+  text-align: center;
+  color: #777;
+  font-size: 15px;
+  margin-top: 40px;
+}

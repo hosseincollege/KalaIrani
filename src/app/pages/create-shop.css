@@ -1,0 +1,122 @@
+.create-shop-form {
+  width: 92%;
+  max-width: 740px;
+  margin: 60px auto;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 5px 15px rgba(0, 80, 80, 0.15);
+  padding: 30px 35px;
+  font-family: "Vazirmatn", sans-serif;
+  direction: rtl;
+  color: #002e2e;
+  text-align: right;
+}
+
+.create-shop-form h2 {
+  color: #006666;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.intro {
+  color: #555;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.create-shop-form label {
+  display: block;
+  font-weight: 600;
+  margin-top: 12px;
+  color: #004c4c;
+}
+.create-shop-form input,
+.create-shop-form select,
+.create-shop-form textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  transition: border-color 0.25s ease;
+}
+.create-shop-form input:focus,
+.create-shop-form select:focus,
+.create-shop-form textarea:focus {
+  border-color: #00aaaa;
+  outline: none;
+}
+
+.preview img,
+.gallery-preview img {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.json-tools {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-top: 18px;
+}
+.json-btn, .upload-json {
+  background-color: #004c4c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.json-btn:hover, .upload-json:hover {
+  background-color: #00aaaa;
+}
+.upload-json input {
+  display: none;
+}
+
+.btn-submit {
+  margin-top: 25px;
+  width: 100%;
+  background-color: #009999;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.btn-submit:hover {
+  background-color: #00b3b3;
+}
+
+.btn-back {
+  background: #006666;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.btn-back:hover {
+  background: #00aaaa;
+}
+
+.loading {
+  color: #777;
+  margin-top: 10px;
+}
+.message {
+  margin-top: 10px;
+  color: #006666;
+  font-weight: 500;
+}

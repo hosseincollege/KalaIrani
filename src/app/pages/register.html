@@ -1,0 +1,21 @@
+<h2>ثبت‌نام کاربر جدید</h2>
+
+<div>
+  <label>نام کاربری:</label>
+  <input [(ngModel)]="username" />
+</div>
+
+<div>
+  <label>ایمیل:</label>
+  <input [(ngModel)]="email" />
+</div>
+
+<div>
+  <label>رمز عبور:</label>
+  <input [(ngModel)]="password" type="password" />
+</div>
+
+<button (click)="register()" [disabled]="loading">ثبت‌نام</button>
+
+<p>{{ message }}</p>
+<p><a routerLink="/login">اکانت داری؟ ورود</a></p>

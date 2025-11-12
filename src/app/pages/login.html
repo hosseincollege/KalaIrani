@@ -1,0 +1,16 @@
+<h2>ورود به حساب کاربری</h2>
+
+<div>
+  <label>نام کاربری:</label>
+  <input [(ngModel)]="username" />
+</div>
+
+<div>
+  <label>رمز عبور:</label>
+  <input [(ngModel)]="password" type="password" />
+</div>
+
+<button (click)="login()" [disabled]="loading">ورود</button>
+
+<p>{{ message }}</p>
+<p><a routerLink="/register">اکانت نداری؟ ثبت‌نام</a></p>
