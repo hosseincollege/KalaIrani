@@ -1,3 +1,4 @@
+// File: src/app/pages/login.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,24 +16,22 @@ export class LoginPage {
   username = '';
   password = '';
   message = '';
-<<<<<<< HEAD
   loading = false;
+  isError = false; // برای استایل‌دهی به پیام خطا (اختیاری)
 
   constructor(private router: Router, private auth: AuthService) {}
-=======
-  isError = false;
-
-  constructor(private router: Router, private authService: AuthService) {}
->>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
 
   login() {
     if (!this.username || !this.password) {
       this.message = '⚠️ لطفاً نام کاربری و رمز عبور را وارد کنید.';
-<<<<<<< HEAD
+      this.isError = true;
       return;
     }
 
     this.loading = true;
+    this.isError = false; // پیام خطا را ریست می‌کنیم
+
+    // اتصال به NestJS Auth Service
     this.auth.login(this.username, this.password).subscribe({
       next: (res: any) => {
         const token = res?.token;
@@ -42,39 +41,11 @@ export class LoginPage {
         setTimeout(() => this.router.navigate(['/account']), 1500);
       },
       error: (err) => {
-        console.error(err);
+        console.error('❌ Login Error:', err);
         this.message = '❌ نام کاربری یا رمز عبور اشتباه است.';
+        this.isError = true;
         this.loading = false;
       }
     });
-=======
-      this.isError = true;
-      return;
-    }
-
-    const storedUser = localStorage.getItem('registeredUser');
-    if (!storedUser) {
-      this.message = '❌ هیچ کاربری در سیستم ثبت نشده است.';
-      this.isError = true;
-      return;
-    }
-
-    const user = JSON.parse(storedUser);
-
-    if (this.username === user.username && this.password === user.password) {
-      // ✅ ایجاد توکن ساختگی تا امضای تابع درست بشه
-      const fakeToken = 'token_' + Date.now().toString();
-
-      // ✅ اصلاح‌شده: دو پارامتر
-      this.authService.login(this.username, fakeToken);
-
-      this.message = '✅ ورود موفقیت‌آمیز بود!';
-      this.isError = false;
-      setTimeout(() => this.router.navigate(['/account']), 1500);
-    } else {
-      this.message = '❌ نام کاربری یا رمز عبور اشتباه است.';
-      this.isError = true;
-    }
->>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
   }
 }

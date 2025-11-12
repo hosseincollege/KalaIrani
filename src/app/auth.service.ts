@@ -1,31 +1,17 @@
-<<<<<<< HEAD
+// File: src/app/auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http'; // ✅ اضافه شد
+import { Router } from '@angular/router'; // ✅ اضافه شد
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment'; // ✅ اضافه شد
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = environment.apiUrl + '/auth';
+  private apiUrl = environment.apiUrl + '/auth'; // ✅ اضافه شد
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {}
-=======
-// File: src/app/auth.service.ts
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthService {
-  private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
-  isLoggedIn$ = this.isLoggedInSubject.asObservable();
-
-  constructor() {}
->>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
+  constructor(private http: HttpClient, private router: Router) {} // ✅ HttpClient و Router تزریق شدند
 
   private hasToken(): boolean {
     return !!localStorage.getItem('token');
@@ -35,27 +21,23 @@ export class AuthService {
     return this.hasToken();
   }
 
-<<<<<<< HEAD
-=======
   // ✅ متد مورد نیاز برای ShopDetail و Account Page
->>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
-  getUsername(): string {
-    return localStorage.getItem('username') || '';
+  getUsername(): string | null { // نوع بازگشتی اصلاح شد
+    return localStorage.getItem('username');
   }
 
-<<<<<<< HEAD
+  // ✅ متد ثبت‌نام برای ارتباط با بک‌اند
   register(username: string, email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, { username, email, password });
   }
 
+  // ✅ متد ورود برای ارتباط با بک‌اند
   login(username: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { username, password });
   }
 
+  // ✅ متد ذخیره نشست (Session)
   storeSession(username: string, token: string) {
-=======
-  login(username: string, token: string) {
->>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
     localStorage.setItem('username', username);
     localStorage.setItem('token', token);
     this.isLoggedInSubject.next(true);
@@ -65,9 +47,6 @@ export class AuthService {
     localStorage.removeItem('username');
     localStorage.removeItem('token');
     this.isLoggedInSubject.next(false);
-<<<<<<< HEAD
-    this.router.navigate(['/login']);
-=======
->>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
+    this.router.navigate(['/login']); // ✅ هدایت پس از خروج اضافه شد
   }
 }
