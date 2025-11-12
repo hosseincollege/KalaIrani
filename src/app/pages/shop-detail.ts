@@ -1,7 +1,7 @@
 // File: src/app/pages/shop-detail.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router'; 
 import { ShopService } from '../services/shop.service';
 import { AuthService } from '../auth.service';
 import { environment } from '../../environments/environment'; // ✅ اضافه شد
@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment'; // ✅ اضافه 
 @Component({
   standalone: true,
   selector: 'app-shop-detail',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink], 
   templateUrl: './shop-detail.html',
   styleUrls: ['./shop-detail.css']
 })
