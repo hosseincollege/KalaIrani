@@ -3,11 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-<<<<<<< HEAD
     "start": "node -e \"console.log('\\x1b[36m%s\\x1b[0m','🟢 Frontend (Angular) • KalaIrani Client launched...')\" && ng serve",
-=======
-    "start": "ng serve",
->>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -26,21 +22,12 @@
   },
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
     "@angular/common": "^20.3.9",
     "@angular/compiler": "^20.3.0",
     "@angular/core": "^20.3.0",
     "@angular/forms": "^20.3.9",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.9",
-=======
-    "@angular/common": "^20.3.0",
-    "@angular/compiler": "^20.3.0",
-    "@angular/core": "^20.3.0",
-    "@angular/forms": "^20.3.0",
-    "@angular/platform-browser": "^20.3.0",
-    "@angular/router": "^20.3.0",
->>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -58,8 +45,4 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.9.2"
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
