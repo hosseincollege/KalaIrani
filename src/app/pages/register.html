@@ -1,47 +1,31 @@
-<<<<<<< HEAD
-<h2>ثبت‌نام کاربر جدید</h2>
-
-<div>
-  <label>نام کاربری:</label>
-  <input [(ngModel)]="username" />
-</div>
-
-<div>
-  <label>ایمیل:</label>
-  <input [(ngModel)]="email" />
-</div>
-
-<div>
-  <label>رمز عبور:</label>
-  <input [(ngModel)]="password" type="password" />
-</div>
-
-<button (click)="register()" [disabled]="loading">ثبت‌نام</button>
-
-<p>{{ message }}</p>
-<p><a routerLink="/login">اکانت داری؟ ورود</a></p>
-=======
-
-<div class="form-container">
+<div class="register-container">
   <h2>ثبت‌نام کاربر جدید</h2>
 
-  <form (ngSubmit)="register()" class="form-box">
-    <label>نام کاربری:</label>
-    <input type="text" [(ngModel)]="username" name="username" required />
+  <form (ngSubmit)="register()">
+    <div class="form-group">
+      <label for="username">نام کاربری:</label>
+      <input id="username" type="text" [(ngModel)]="username" name="username" required>
+    </div>
 
-    <label>ایمیل:</label>
-    <input type="email" [(ngModel)]="email" name="email" required />
+    <div class="form-group">
+      <label for="email">ایمیل:</label>
+      <input id="email" type="email" [(ngModel)]="email" name="email" required>
+    </div>
 
-    <label>رمز عبور:</label>
-    <input type="password" [(ngModel)]="password" name="password" required />
+    <div class="form-group">
+      <label for="password">رمز عبور:</label>
+      <input id="password" type="password" [(ngModel)]="password" name="password" required>
+    </div>
 
-    <button type="submit">ثبت‌نام</button>
+    <button type="submit" [disabled]="loading || !username || !email || !password">
+      <span *ngIf="!loading">ثبت‌نام</span>
+      <span *ngIf="loading">در حال ثبت‌نام...</span>
+    </button>
   </form>
 
-  <p *ngIf="message" [ngClass]="{ 'error': isError, 'success': !isError }">
-    {{ message }}
-  </p>
+  <p class="message">{{ message }}</p>
 
-  <p class="text-link">اکانت داری؟ <a routerLink="/login">ورود</a></p>
+  <p class="login-link">
+    اکانت داری؟ <a routerLink="/login">ورود</a>
+  </p>
 </div>
->>>>>>> 88e9041861669a3a0678de86b04a953c64d33559
