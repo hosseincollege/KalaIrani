@@ -1,7 +1,9 @@
+// File: src/app/pages/register.ts ✅ نسخه‌ی متصل به بک‌اند واقعی
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -16,8 +18,12 @@ export class RegisterPage {
   password = '';
   message = '';
   isError = false;
+  loading = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   register() {
     if (!this.username || !this.email || !this.password) {
@@ -26,12 +32,24 @@ export class RegisterPage {
       return;
     }
 
-    const newUser = { username: this.username, email: this.email, password: this.password };
-    localStorage.setItem('registeredUser', JSON.stringify(newUser));
+    this.loading = true;
+    this.authService
+      .register(this.username, this.email, this.password)
+      .subscribe({
+        next: (res) => {
+          this.loading = false;
+          this.message = res.message || '✅ ثبت‌نام با موفقیت انجام شد';
+          this.isError = false;
 
-    this.message = '✅ ثبت‌نام با موفقیت انجام شد';
-    this.isError = false;
-
-    setTimeout(() => this.router.navigate(['/login']), 1500);
+          // بعد از ۱.۵ ثانیه هدایت به صفحه لاگین
+          setTimeout(() => this.router.navigate(['/login']), 1500);
+        },
+        error: (err) => {
+          this.loading = false;
+          this.isError = true;
+          this.message =
+            err.error?.message || '❌ مشکلی در ثبت‌نام رخ داد.';
+        }
+      });
   }
 }

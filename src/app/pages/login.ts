@@ -26,28 +26,19 @@ export class LoginPage {
       return;
     }
 
-    const storedUser = localStorage.getItem('registeredUser');
-    if (!storedUser) {
-      this.message = '❌ هیچ کاربری در سیستم ثبت نشده است.';
-      this.isError = true;
-      return;
-    }
-
-    const user = JSON.parse(storedUser);
-
-    if (this.username === user.username && this.password === user.password) {
-      // ✅ ایجاد توکن ساختگی تا امضای تابع درست بشه
-      const fakeToken = 'token_' + Date.now().toString();
-
-      // ✅ اصلاح‌شده: دو پارامتر
-      this.authService.login(this.username, fakeToken);
-
-      this.message = '✅ ورود موفقیت‌آمیز بود!';
-      this.isError = false;
-      setTimeout(() => this.router.navigate(['/account']), 1500);
-    } else {
-      this.message = '❌ نام کاربری یا رمز عبور اشتباه است.';
-      this.isError = true;
-    }
+    this.authService.login(this.username, this.password).subscribe({
+      next: (res) => {
+        const token = res.token;
+        const username = res.user.username;
+        this.authService.storeSession(username, token);
+        this.message = '✅ ورود موفقیت‌آمیز بود!';
+        this.isError = false;
+        setTimeout(() => this.router.navigate(['/account']), 1500);
+      },
+      error: (err) => {
+        this.message = '❌ ' + err.error.message;
+        this.isError = true;
+      }
+    });
   }
 }

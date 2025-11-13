@@ -7,7 +7,7 @@ import { environment } from '../environments/environment'; // ✅ environment ا
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = environment.apiUrl + '/auth'; // استفاده از متغیر محیطی
+  private apiUrl = environment.apiUrl + '/api/auth';
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
