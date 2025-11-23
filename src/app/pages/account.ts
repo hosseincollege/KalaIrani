@@ -1,10 +1,9 @@
-// File: src/app/pages/account.ts ✅ نسخه نهایی
+// File: src/app/pages/account.ts ✅ نسخه نهایی اصلاح‌شده حسین
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { ShopService } from '../services/shop.service';
-import { environment } from '../../environments/environment';
 
 @Component({
   standalone: true,
@@ -35,15 +34,16 @@ export class AccountPage implements OnInit {
       this.loading = true;
       this.shopService.getAll().subscribe({
         next: (shops: any[]) => {
-          // فقط فروشگاه‌های مربوط به کاربر لاگین‌شده
+          // فقط فروشگاه‌های کاربر فعلی
           this.myShops = shops
             .filter(s => s.owner === username)
             .map(s => ({
               ...s,
-              safeCover: s.coverImage
-                ? `${s.coverImage.startsWith('http') ? '' : environment.apiUrl + '/uploads/'}${s.coverImage}`
+              // از URL کامل بک‌اند استفاده کن
+              safeCover: s.coverImagePath && s.coverImagePath.trim() !== ''
+                ? s.coverImagePath
                 : this.fallbackImage
-            }))
+            }));
           this.loading = false;
         },
         error: err => {
@@ -58,12 +58,10 @@ export class AccountPage implements OnInit {
     this.router.navigate(['/create-shop']);
   }
 
-  // ⬇️ دکمه مدیریت محصولات
   manageProducts(shopId: number) {
     this.router.navigate([`/shops/${shopId}/products`]);
   }
 
-  // ⬇️ دکمه مشاهده فروشگاه
   goToShopDetail(shopId: number) {
     this.router.navigate([`/shop/${shopId}`]);
   }

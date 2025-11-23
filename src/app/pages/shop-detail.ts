@@ -1,10 +1,9 @@
-// src/app/pages/shop-detail.ts
+// src/app/pages/shop-detail.ts ✅ نسخه اصلاح‌شده برای حسین
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShopService } from '../services/shop.service';
 import { AuthService } from '../auth.service';
-import { environment } from '../../environments/environment';
 
 @Component({
   standalone: true,
@@ -43,14 +42,16 @@ export class ShopDetailPage implements OnInit {
         this.shop = res;
         this.loading = false;
 
-        this.coverSrc = res.coverImage
-          ? `${res.coverImage.startsWith('http') ? '' : environment.apiUrl + '/uploads/'}${res.coverImage}`
+        // حالا از URL کامل برگشتی از API استفاده می‌کنیم
+        this.coverSrc = res.coverImagePath && res.coverImagePath.trim() !== ''
+          ? res.coverImagePath
           : this.fallbackImage;
 
-        this.galleryItems = (res.gallery || []).map((g: string) =>
-          `${g.startsWith('http') ? '' : environment.apiUrl + '/uploads/'}${g}`
-        );
-
+        this.galleryItems = Array.isArray(res.galleryPaths)
+          ? res.galleryPaths.map((g: string) =>
+              g && g.trim() !== '' ? g : this.fallbackImage
+            )
+          : [];
 
         this.isOwner = Boolean(currentUser && currentUser === res.owner);
         this.loadProducts(id);
@@ -62,20 +63,22 @@ export class ShopDetailPage implements OnInit {
     });
   }
 
-  // 🔹 بارگذاری محصولات
+  // 🔹 بارگذاری محصولات فروشگاه
   loadProducts(shopId: number) {
     this.shopService.getProductsByShop(shopId).subscribe({
       next: (data) => {
         this.products = (data || []).map((p: any) => ({
           ...p,
-          imageUrl: p.imagePath ? `http://localhost:5189${p.imagePath}` : this.fallbackImage
+          imageUrl: p.imagePath && p.imagePath.trim() !== ''
+            ? p.imagePath
+            : this.fallbackImage
         }));
       },
       error: (err) => console.error('❌ خطا در دریافت محصولات:', err)
     });
   }
 
-  // 🔹 هندل خطا تصاویر
+  // 🔹 هندل خطا در تصاویر
   handleImageError(item: any) {
     item.imageUrl = this.fallbackImage;
   }
@@ -93,7 +96,7 @@ export class ShopDetailPage implements OnInit {
   deleteShop(id: number) {
     if (!confirm('آیا از حذف این فروشگاه اطمینان دارید؟')) return;
 
-    const username = this.auth.getUsername(); // <<< نام کاربر فعلی
+    const username = this.auth.getUsername();
     if (!username) {
       alert('ابتدا وارد حساب کاربری شوید.');
       return;
